@@ -22,32 +22,31 @@ DIM_EMPLOYEE=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Employee.csv')
 date=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Status.csv', usecols=['Status_Start_Date', 'Status_End_Date', 'Status Key'])
 datepaye=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_PaidLeave.csv', usecols=['PaidLeave_Start_Date', 'PaidLeave_End_Date'])
 datepayecong=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_PaidLeave.csv', usecols=['PaidLeave_Start_Date', 'PaidLeave_End_Date', 'PaidLeave Key'])
-#FACT=pandas.read_csv('C:/Users/ikarray/Downloads/Fact.csv', usecols=['ES Key', 'Employee Key'])
-FACT3=pandas.read_csv('C:/Users/ikarray/Downloads/Fact.csv', usecols=['Contract Key', 'Status Key', 'Employee Key'])
-FACT2=pandas.read_csv('C:/Users/ikarray/Downloads/Fact.csv', usecols=['Employee Key', 'Contract Key', 'PaidLeave Key'])
+
+FACT=pandas.read_csv('C:/Users/ikarray/Downloads/Fact.csv', usecols=['ES Key', 'Employee Key', 'Contract Key', 'Status Key', 'PaidLeave Key'])
 
 tabeffectifpaye=DIM_EMPLOYEE[DIM_EMPLOYEE["Emp_Salary"]>0]
 tabeffectifpaye=tabeffectifpaye.drop_duplicates(subset="Employee Key")
 nb_ligneseffectifpaye=len(tabeffectifpaye)
 nb_ligneseffectiftotal=len(DIM_EMPLOYEE)
 DIM_CONTRACTT=DIM_CONTRACT[DIM_CONTRACT['Contract_Type_Code']=='CDI']
-effectifcdi=pandas.merge(FACT2, DIM_CONTRACTT, on='Contract Key')
-secondeffectifcdi=pandas.merge(FACT2, DIM_CONTRACT, on='Contract Key')
+effectifcdi=pandas.merge(FACT, DIM_CONTRACTT, on='Contract Key')
+secondeffectifcdi=pandas.merge(FACT, DIM_CONTRACT, on='Contract Key')
 DIM_PAYE=pandas.merge(secondeffectifcdi, DIM_EMPLOYEE, on='Employee Key')
 DIM_PAYE=DIM_PAYE.drop_duplicates(subset="Employee Key")
 DIM_PAYE=pandas.merge(DIM_PAYE, DIM_PAIDLEAVE, on='PaidLeave Key')
-DIM_PAYE=DIM_PAYE[DIM_PAYE["PaidLeave_Taken"]!='0']
+DIM_PAYE=DIM_PAYE[DIM_PAYE["PaidLeave_Taken"]!='0'] 
 DIM_PAYE=DIM_PAYE.drop_duplicates(subset="Employee Key") #Pour que chaque employé face une unique apparition dans le tableau
 effectifcdi=effectifcdi.drop_duplicates(subset="Employee Key")
 nb_ligneseffectifcdi=len(effectifcdi)
 effectifactif=DIM_STATUS[DIM_STATUS['Status.EN']=='Active']
 nb_ligneseffectifactif=len(effectifactif)
-tableauemploieeffectif=pandas.merge(DIM_CONTRACT,FACT3, on='Contract Key')
+tableauemploieeffectif=pandas.merge(DIM_CONTRACT,FACT, on='Contract Key')
 tableauemploieeffectif=pandas.merge(tableauemploieeffectif, DIM_STATUS, on='Status Key')
 tableauemploieeffectif=pandas.merge(tableauemploieeffectif, DIM_EMPLOYEE, on='Employee Key') 
 tableauemploieeffectif=tableauemploieeffectif[tableauemploieeffectif['Status.EN']=='Active']
 tableauemploieeffectif=tableauemploieeffectif.drop_duplicates(subset="Employee Key")
-tableauemploieorganisation=pandas.merge(FACT3, DIM_STATUS, on='Status Key')
+tableauemploieorganisation=pandas.merge(FACT, DIM_STATUS, on='Status Key')
 tableauemploieorganisation=pandas.merge(tableauemploieorganisation, DIM_CONTRACT, on='Contract Key') 
 tableauemploieorganisation=tableauemploieorganisation[tableauemploieorganisation['Status.EN']=='Active']
 tableauevolutioneffectif=DIM_STATUS[DIM_STATUS['Status.EN']=='Active']
@@ -138,13 +137,8 @@ def calculvaldat(annee):
 app=dash.Dash(__name__)
 
 app.layout=html.Div([
-dcc.Location(id='url', refresh=False),
-html.Div(id='page-content')])
-
-page_1_layout=html.Div([
 html.Div([
 html.H1(id='titre', children="Dashboard RH", style={"display": "inline-block", "margin-left": "40%", "color": "red"}),
-dcc.Link(id='paralien1v2', children="Page suivante", href="/Page-2", style={"display": "inline-block", "margin-left": "30%" , "color": "red"}),
 html.Br(), 
 html.P(id='sous-titre', children="Global Vue", style={"display": "inline-block", "width": "100%", "margin-left": "42%", "color": "white",'fontFamily': 'Arial', 'fontSize': '20px'}),
 ], style={'backgroundColor': 'rgba(0,0,0,0.7)'}),
@@ -208,11 +202,11 @@ dcc.Graph(id='graphdeux', style={"display": "inline-block", "width": "35%", "mar
 
 
 @app.callback(
-Output('graph', 'figure'), Output('graphdeux', 'figure'), Output('bouton_A/E', 'children'), Output('bouton_A/UO', 'children'), Output('paralangue', 'children'), Output('CDI', 'children'), Output('paye', 'children'), Output('total', 'children'), Output('titre', 'children'),Output('bouton_A/E', 'style'), Output('bouton_A/UO', 'style'), Output('etat-cache1', 'data'), Output('etat-cache2', 'data'), Output('parannee', 'children'), Output('sous-titre', 'children'), Output('paralien1v2', 'children'), Output('parafiltre', 'children'), Output('actifselec', 'children'), Output('nbractifselec', 'children'), #avant CDI Output('actif', 'children'),
-Input('url', 'pathname'), Input('bouton_A/E', 'n_clicks'), Input('bouton_A/UO', 'n_clicks'), Input('menu_langue', 'value'), Input('menu_année', 'value'), 
+Output('graph', 'figure'), Output('graphdeux', 'figure'), Output('bouton_A/E', 'children'), Output('bouton_A/UO', 'children'), Output('paralangue', 'children'), Output('CDI', 'children'), Output('paye', 'children'), Output('total', 'children'), Output('titre', 'children'),Output('bouton_A/E', 'style'), Output('bouton_A/UO', 'style'), Output('etat-cache1', 'data'), Output('etat-cache2', 'data'), Output('parannee', 'children'), Output('sous-titre', 'children'), Output('parafiltre', 'children'), Output('actifselec', 'children'), Output('nbractifselec', 'children'), #avant CDI Output('actif', 'children'),
+Input('bouton_A/E', 'n_clicks'), Input('bouton_A/UO', 'n_clicks'), Input('menu_langue', 'value'), Input('menu_année', 'value'), 
 State('etat-cache1', 'data'), State('etat-cache2', 'data')
 )
-def update_graph(path, n_click1, n_click2, val, annee, val1, val2): 
+def update_graph(n_click1, n_click2, val, annee, val1, val2): 
 			annee=int(annee) 
 			if annee>=2021:
 				secondannee=2021
@@ -244,7 +238,7 @@ def update_graph(path, n_click1, n_click2, val, annee, val1, val2):
 				yaxis={'categoryorder': 'total ascending'}, 
 				annotations=[
 				dict(text=labels[val]['fig1']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))])
-				return fig1, fig2, labels[val]['button1']['title'], labels[val]['button2']['title'], labels[val]['paralangue']['title'], labels[val]['CDI']['title'], labels[val]['paye']['title'], labels[val]['total']['title'], labels[val]['titre']['title'], col1, col2, val1, val2, labels[val]['parannee']['title'], labels[val]['sous-titre']['title'], labels[val]['paralien1v2']['title'], labels[val]['parafiltre']['title'], labels[val]['actifselec']['title'], nb_ligneseffectifactifselecc 
+				return fig1, fig2, labels[val]['button1']['title'], labels[val]['button2']['title'], labels[val]['paralangue']['title'], labels[val]['CDI']['title'], labels[val]['paye']['title'], labels[val]['total']['title'], labels[val]['titre']['title'], col1, col2, val1, val2, labels[val]['parannee']['title'], labels[val]['sous-titre']['title'], labels[val]['parafiltre']['title'], labels[val]['actifselec']['title'], nb_ligneseffectifactifselecc 
 			elif val2==1:
 				fig1=px.histogram(tableauemploieeffectif, y=labels[val]['fig3']['contenu'], title= labels[val]['fig3']['title'], color_discrete_sequence=['rgb(0, 0, 180)'], text_auto=True) 
 				col1={"display": "inline-block", "width": "13%", "margin-left": "5%", 'backgroundColor': 'white'}
@@ -254,8 +248,24 @@ def update_graph(path, n_click1, n_click2, val, annee, val1, val2):
 				annotations=[
 				dict(text=labels[val]['fig3']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 				])
-				return fig1, fig2, labels[val]['button1']['title'], labels[val]['button2']['title'], labels[val]['paralangue']['title'], labels[val]['CDI']['title'], labels[val]['paye']['title'], labels[val]['total']['title'], labels[val]['titre']['title'], col1, col2, val1, val2, labels[val]['parannee']['title'], labels[val]['sous-titre']['title'], labels[val]['paralien1v2']['title'], labels[val]['parafiltre']['title'], labels[val]['actifselec']['title'], nb_ligneseffectifactifselecc
+				return fig1, fig2, labels[val]['button1']['title'], labels[val]['button2']['title'], labels[val]['paralangue']['title'], labels[val]['CDI']['title'], labels[val]['paye']['title'], labels[val]['total']['title'], labels[val]['titre']['title'], col1, col2, val1, val2, labels[val]['parannee']['title'], labels[val]['sous-titre']['title'], labels[val]['parafiltre']['title'], labels[val]['actifselec']['title'], nb_ligneseffectifactifselecc
 
 if __name__=='__main__':  
 	app.run(debug=True)
+
+#Sans FACT ligne 25:
 #2,25/5,19
+#Avec FACT ligne 25:
+#2,34/5,20
+#Avec 10 FACT:
+#4,12/8,15
+#Avec 1 Merge: 
+#2,47/6,O1
+#Avec 10 (selec ligne specifique tab):
+#2,42/5,37
+
+
+
+
+#En replaceant FACT2 FACT3 par le FACT:
+#2,26/5,07
