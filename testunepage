@@ -1,0 +1,261 @@
+import plotly.express as px
+import pandas
+import dash
+from dash.dependencies import Input, Output, State
+import dash.html as html
+import dash.dcc as dcc
+from plotly.subplots import make_subplots
+from datetime import datetime
+from dash import dash_table
+
+labels = {} 
+labels['Anglais']={'fig1': {'title': "Active effectif", 'subtitle':"/Nationality", 'contenu': "Emp_Nationality.EN"}, 'fig2': {'title': "Evolution of the effectif", 'subtitle': "/year", 'information': "The logarithmic scale has been replaced by the linear scale, because the range of..."}, 'fig3': {'title': "Active effectif", 'subtitle': "/Contract type", 'contenu':"Contract_Type.EN" }, 'button1': {'title':"active effectif/employement"}, 'button2': {'title': "active effectif/Contract type"}, 'paralangue': {'title': "choose your language:"}, 'actif': {'title': "active effectif"}, 'CDI': {'title': "permanent contract effectif"}, 'paye':{'title': "paied effectif"}, 'total':{'title': "total effectif"}, 'titre': {'title': "Dashboard RH"}, 'parannee': {'title': "choose the year:"}, 'sous-titre': {'title': "Global Vue"}, 'paralien1v2': {'title': "next page"}, 'parafiltre': {'title': "your filters: "}, 'actifselec': {'title':"actif effectif selectionned year" }} #'paralien2v1': {'title': "precedent page"} (av parafiltre)
+labels['Français']={'fig1': {'title': "effective actif", 'subtitle': "/Nationalité", 'contenu': "Emp_Nationality.FR"}, 'fig2': {'title': "Evolution de l'effectif", 'subtitle': "/Année", 'information': "L'échelle logarithmique a été remplacée par une échelle linéaire,car la plage de ..."}, 'fig3': {'title': "Effectif actif", 'subtitle': "/Type du contrat", 'contenu': "Contract_Type.FR"}, 'button1': {'title': "Effectif actif/Emploi"}, 'button2': {'title': "Effectif actif/type de contrat"}, 'paralangue': {'title': "Selectionner la langue:"}, 'actif': {'title': "effectif actif"}, 'CDI': {'title': "Effectif en CDI"}, 'paye': {'title': "Effectif payé"}, 'total':{'title': "effectif total"}, 
+'titre': {'title': 'Tableau de Bord RH'}, 'parannee': {'title': "choisissez l'année:"}, 'sous-titre': {'title': "Vue globale"}, 'paralien1v2': {'title': "page suivante"}, 'parafiltre': {'title': "vos filtres:"}, 'figg2':{'title': "Evolution du nombre de conger payé", 'subtitle':"/Année", 'contenu': "Contract_Type_Code"}, 'figg1': {'title': "Nombre de congédiers payé", 'subtitle': "/Nombre de jours de congé (filtrable par nom ou type de contrat)"}, 'figg3': {'title': "Nombre de congédiers payé", 'subtitle':"/Type de contrat du congédier", 'contenu': "Emp_FirstName"}, 'actifselec': {'title':"effectif actif année selectionné "},
+'fiig1': {'title': 'genre effectif', 'subtitle': '/augmentation'}, 'fiig3': {'title': 'genre effectif', 'subtitle': '/salaire'}, 'fiig2': {'title': 'evolution effectif feminin', 'subtitle': '/Année' }, 'fiig4': {'title': 'evolution effectif masculin', 'subtitle': '/Année'}, 'fiig6': {'title': 'evolution effectif feminin sur effectif total', 'subtitle': '/Année'}, 'fiig8': {'title': 'evolution effectif congédiers féminin sur congédiers total', 'subtitle': '/Année', 'information' :'Nous avons fait le choix de retourner un zero lorsque le nombre de congédier total est nul'}}
+
+DIM_STATUS=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Status.csv') 
+DIM_ENTRYEXIT=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_EntryExit.csv')
+DIM_PAIDLEAVE=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_PaidLeave.csv')
+DIM_CONTRACT=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Contract.csv')
+DIM_EMPLOYEE=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Employee.csv')
+date=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Status.csv', usecols=['Status_Start_Date', 'Status_End_Date', 'Status Key'])
+datepaye=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_PaidLeave.csv', usecols=['PaidLeave_Start_Date', 'PaidLeave_End_Date'])
+datepayecong=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_PaidLeave.csv', usecols=['PaidLeave_Start_Date', 'PaidLeave_End_Date', 'PaidLeave Key'])
+#FACT=pandas.read_csv('C:/Users/ikarray/Downloads/Fact.csv', usecols=['ES Key', 'Employee Key'])
+FACT3=pandas.read_csv('C:/Users/ikarray/Downloads/Fact.csv', usecols=['Contract Key', 'Status Key', 'Employee Key'])
+FACT2=pandas.read_csv('C:/Users/ikarray/Downloads/Fact.csv', usecols=['Employee Key', 'Contract Key', 'PaidLeave Key'])
+
+tabeffectifpaye=DIM_EMPLOYEE[DIM_EMPLOYEE["Emp_Salary"]>0]
+tabeffectifpaye=tabeffectifpaye.drop_duplicates(subset="Employee Key")
+nb_ligneseffectifpaye=len(tabeffectifpaye)
+nb_ligneseffectiftotal=len(DIM_EMPLOYEE)
+DIM_CONTRACTT=DIM_CONTRACT[DIM_CONTRACT['Contract_Type_Code']=='CDI']
+effectifcdi=pandas.merge(FACT2, DIM_CONTRACTT, on='Contract Key')
+secondeffectifcdi=pandas.merge(FACT2, DIM_CONTRACT, on='Contract Key')
+DIM_PAYE=pandas.merge(secondeffectifcdi, DIM_EMPLOYEE, on='Employee Key')
+DIM_PAYE=DIM_PAYE.drop_duplicates(subset="Employee Key")
+DIM_PAYE=pandas.merge(DIM_PAYE, DIM_PAIDLEAVE, on='PaidLeave Key')
+DIM_PAYE=DIM_PAYE[DIM_PAYE["PaidLeave_Taken"]!='0']
+DIM_PAYE=DIM_PAYE.drop_duplicates(subset="Employee Key") #Pour que chaque employé face une unique apparition dans le tableau
+effectifcdi=effectifcdi.drop_duplicates(subset="Employee Key")
+nb_ligneseffectifcdi=len(effectifcdi)
+effectifactif=DIM_STATUS[DIM_STATUS['Status.EN']=='Active']
+nb_ligneseffectifactif=len(effectifactif)
+tableauemploieeffectif=pandas.merge(DIM_CONTRACT,FACT3, on='Contract Key')
+tableauemploieeffectif=pandas.merge(tableauemploieeffectif, DIM_STATUS, on='Status Key')
+tableauemploieeffectif=pandas.merge(tableauemploieeffectif, DIM_EMPLOYEE, on='Employee Key') 
+tableauemploieeffectif=tableauemploieeffectif[tableauemploieeffectif['Status.EN']=='Active']
+tableauemploieeffectif=tableauemploieeffectif.drop_duplicates(subset="Employee Key")
+tableauemploieorganisation=pandas.merge(FACT3, DIM_STATUS, on='Status Key')
+tableauemploieorganisation=pandas.merge(tableauemploieorganisation, DIM_CONTRACT, on='Contract Key') 
+tableauemploieorganisation=tableauemploieorganisation[tableauemploieorganisation['Status.EN']=='Active']
+tableauevolutioneffectif=DIM_STATUS[DIM_STATUS['Status.EN']=='Active']
+
+VALDAYPAIDLEAVE=[]
+INTVALDAYPAIDLEAVE=[]
+durecongemax=0
+for i in range(len(DIM_PAIDLEAVE)): 
+	a=DIM_PAIDLEAVE["PaidLeave_Taken"][i].replace(",", ".") #Car un float en python est avec un point et pas avec une virgule 
+	INTVALDAYPAIDLEAVE.append(a)
+	b=int(float(INTVALDAYPAIDLEAVE[i]))
+	VALDAYPAIDLEAVE.append(b)
+	if VALDAYPAIDLEAVE[i]>durecongemax:
+		durecongemax=VALDAYPAIDLEAVE[i]
+
+CROISSANTVALDAYPAIDLEAVE=VALDAYPAIDLEAVE 
+CROISSANTVALDAYPAIDLEAVE.sort() #on classe le tableau de congé par ordre croissant
+moitie=len(DIM_PAIDLEAVE)/2 # on calcule la moitie du tableau d'ordre croissant
+moitie=int(moitie) 
+mediane=CROISSANTVALDAYPAIDLEAVE[moitie] #par définition la mediane est la valeur de la moitié du tableau qui classe les congé par ordre croissant
+
+annee_end=[]
+annee_start=[]
+df=pandas.DataFrame(date)
+for i in range(len(date)):
+    date_str=df['Status_Start_Date'][i]
+    annee_start.append([datetime.strptime(date_str, '%d/%m/%Y').year] )
+annee_start=[int(item[0]) for item in annee_start] #sachant que la table est une table de list on utilise cette commande pour la convertir en int   
+for i in range(len(date)):
+    date_str=df['Status_End_Date'][i]
+    annee_end.append([datetime.strptime(date_str, '%d/%m/%Y').year] ) 
+annee_end=[int(item[0]) for item in annee_end] #même chose pour la table end 
+
+annee_endpaid=[]
+annee_startpaid=[]
+df=pandas.DataFrame(datepaye)
+for i in range(len(datepaye)):
+    date_strpaid=df['PaidLeave_Start_Date'][i]
+    annee_startpaid.append([datetime.strptime(date_strpaid, '%d/%m/%Y').year] )
+annee_startpaid=[int(item[0]) for item in annee_startpaid] #sachant que la table est une table de list on utilise cette commande pour la convertir en int   
+for i in range(len(datepaye)):
+    date_strpaid=df['PaidLeave_End_Date'][i]
+    annee_endpaid.append([datetime.strptime(date_strpaid, '%d/%m/%Y').year] ) 
+annee_endpaid=[int(item[0]) for item in annee_endpaid] #même chose pour la table end 
+
+def calculannee(n):
+	date_actuelle=[]
+	a=0
+	nbr_date_totales=5
+	for i in range(nbr_date_totales):  
+		a=n+i
+		date_actuelle.append(a)  
+	return date_actuelle
+def calculvaldate(date_actuelle):
+	tableauemploieactifpardate=[]
+	nbr_date_totales=5
+	for j in range(nbr_date_totales): #nbr de date totales
+		a=0
+		for i in range(len(date)): 
+			if date_actuelle[j]>=annee_start[i] :#Status_Start_Date:
+				if date_actuelle[j]<=annee_end[i]:#Status_End_date:
+					b=1
+				else:
+					b=0
+			else:
+				b=0 
+			a=a+b
+		tableauemploieactifpardate.append(a) #on stoque la somme d'employé actif pour une date précise 
+	return tableauemploieactifpardate
+
+
+def calculvaldat(annee):
+	tableauemploieactifpardate=[]
+	a=0
+	for i in range(len(date)):  
+		if annee>=annee_start[i] :
+			if annee<=annee_end[i]:
+				b=1
+			else:
+				b=0
+		else:
+			b=0 
+		a=a+b
+	#on stoque la somme d'employé actif pour une date précise 
+	return a
+
+
+app=dash.Dash(__name__)
+
+app.layout=html.Div([
+dcc.Location(id='url', refresh=False),
+html.Div(id='page-content')])
+
+page_1_layout=html.Div([
+html.Div([
+html.H1(id='titre', children="Dashboard RH", style={"display": "inline-block", "margin-left": "40%", "color": "red"}),
+dcc.Link(id='paralien1v2', children="Page suivante", href="/Page-2", style={"display": "inline-block", "margin-left": "30%" , "color": "red"}),
+html.Br(), 
+html.P(id='sous-titre', children="Global Vue", style={"display": "inline-block", "width": "100%", "margin-left": "42%", "color": "white",'fontFamily': 'Arial', 'fontSize': '20px'}),
+], style={'backgroundColor': 'rgba(0,0,0,0.7)'}),
+html.Br(),
+html.Br(),
+html.Div([ 
+html.P(id='actifselec', children="effectif actif année selectionner", style={"display": "inline-block",  "width": "22%", "margin-left": "10%"}),  
+html.P(id= 'CDI', children="Effectif en CDI actuel", style={"display": "inline-block", "width": "22%"}),
+html.P(id='paye', children="Effectif payé actuel", style={"display": "inline-block", "width": "22%"}),
+html.P(id='total', children="Effectif Total actuel", style={"display": "inline-block", "width": "22%", "margin-right": "0%"}), 
+html.P(id='nbractifselec',children="nb_ligneseffectifactifselec", style={"display": "inline-block", "width": "22%", "margin-left": "15%", 'color': 'purple'}),
+html.P(nb_ligneseffectifcdi, style={"display": "inline-block", "width": "22%", 'color': 'purple'}),
+html.P(nb_ligneseffectifpaye, style={"display": "inline-block", "width": "22%", 'color': 'purple'}),
+html.P(nb_ligneseffectiftotal, style={"display": "inline-block", "width": "10%", "margin-right": "0%", 'color': 'purple'}),
+], style={ "margin-left": "25%", 'backgroundColor': 'rgb(255, 255, 255)', "width": "70%",  "border": "2px solid black"}), 
+html.Br(),
+html.Br(),
+html.Div([
+html.Div([
+html.P(id='parafiltre', children="your filter:", style={"display": "inline-block", "width": "50%", "margin-left": "0%", 'backgroundColor': 'white', 'padding': '10px'}),
+html.Br(),
+html.P(id='paralangue', children="choose your language:", style={"display": "inline-block", "width": "50%", "margin-left": "0%", 'backgroundColor': 'white', 'padding': '5px'}), 
+html.Br(), 
+dcc.Store(id="etat-cache1", data=1, storage_type='session'),  
+dcc.Store(id="etat-cache2", data=0, storage_type='session'),
+dcc.Dropdown(
+id='menu_langue', 
+options=[{'label': 'Anglais', 'value': 'Anglais'}, {'label': 'Français', 'value': 'Français'}],
+style={"display": "inline-block", "width": "75%"},
+clearable=False,
+value='Français'
+), 
+html.Br(),
+html.P(id='parannee', children="choose the year:", style={"display": "inline-block", "width": "50%", "margin-left": "0%", 'backgroundColor': 'white', 'padding': '10px'}),      
+html.Br(),
+dcc.Dropdown(
+id='menu_année',  
+options=[ 
+		{'label': '1967', 'value': '1967'}, {'label': '1968', 'value': '1968'}, {'label': '1969', 'value': '1969'},
+		{'label': '1970', 'value': '1970'}, {'label': '1971', 'value': '1971'}, {'label': '1972', 'value': '1972'}, {'label': '1973', 'value': '1973'}, {'label': '1974', 'value': '1974'}, {'label': '1975', 'value': '1975'}, {'label': '1976', 'value': '1976'},	{'label': '1977', 'value': '1977'}, {'label': '1978', 'value': '1978'}, {'label': '1979', 'value': '1979'}, 
+		{'label': '1980', 'value': '1980'}, {'label': '1981', 'value': '1981'}, {'label': '1982', 'value': '1982'}, {'label': '1983', 'value': '1983'}, {'label': '1984', 'value': '1984'}, {'label': '1985', 'value': '1985'}, {'label': '1986', 'value': '1986'}, {'label': '1987', 'value': '1987'}, {'label': '1988', 'value': '1988'}, {'label': '1989', 'value': '1989'}, 
+		{'label': '1990', 'value': '1990'}, {'label': '1991', 'value': '1991'}, {'label': '1992', 'value': '1992'}, {'label': '1993', 'value': '1993'}, {'label': '1994', 'value': '1994'}, {'label': '1995', 'value': '1995'}, {'label': '1996', 'value': '1996'}, {'label': '1997', 'value': '1997'}, {'label': '1998', 'value': '1998'}, {'label': '1999', 'value': '1999'},
+		{'label': '2000', 'value': '2000'}, {'label': '2001', 'value': '2001'}, {'label': '2002', 'value': '2002'}, {'label': '2003', 'value': '2003'}, {'label': '2004', 'value': '2004'}, {'label': '2005', 'value': '2005'}, {'label': '2006', 'value': '2006'}, {'label': '2007', 'value': '2007'}, {'label': '2008', 'value': '2008'}, {'label': '2009', 'value': '2009'},
+		{'label': '2010', 'value': '2010'}, {'label': '2011', 'value': '2011'}, {'label': '2012', 'value': '2012'}, {'label': '2013', 'value': '2013'}, {'label': '2014', 'value': '2014'}, {'label': '2015', 'value': '2015'}, {'label': '2016', 'value': '2016'}, {'label': '2017', 'value': '2017'}, {'label': '2018', 'value': '2018'}, {'label': '2019', 'value': '2019'}, 
+		{'label': '2020', 'value': '2020'}, {'label': '2021', 'value': '2021'}, {'label': '2022', 'value': '2022'}, {'label': '2023', 'value': '2023'}, {'label': '2024', 'value': '2024'}, {'label': '2025', 'value': '2025'}
+	],
+clearable=False,
+style={"display": "inline-block", "width": "50%"}, 
+value='2021'
+) 
+], style={"display": "inline-block","width":"15%", 'backgroundColor': 'rgb(255,255,255)',  "border": "2px solid black"}), 
+html.Div([
+html.Button( id='bouton_A/E', children='active effectif/employement', style={"display": "inline-block", "width": "13%", 'backgroundColor': 'red'}, n_clicks=1),
+html.Button( id='bouton_A/UO', children='active effectif/Contract type', style={"display": "inline-block", "width": "13%", 'backgroundColor': 'white'}, n_clicks=0),
+html.Br(), 
+dcc.Graph(id='graph', style={"display":"inline-block", "width": "35%", "margin-left": "0%"}),
+dcc.Graph(id='graphdeux', style={"display": "inline-block", "width": "35%", "margin-left": "4%"})
+], style={"display": "inline-block","width": "80%", 'margin-left': '5%'}), 
+], style={'display': 'flex', 'margin': '0', 'padding':'0'}),
+], style={'backgroundColor': 'rgb(240, 240, 240)'})
+
+
+@app.callback(
+Output('graph', 'figure'), Output('graphdeux', 'figure'), Output('bouton_A/E', 'children'), Output('bouton_A/UO', 'children'), Output('paralangue', 'children'), Output('CDI', 'children'), Output('paye', 'children'), Output('total', 'children'), Output('titre', 'children'),Output('bouton_A/E', 'style'), Output('bouton_A/UO', 'style'), Output('etat-cache1', 'data'), Output('etat-cache2', 'data'), Output('parannee', 'children'), Output('sous-titre', 'children'), Output('paralien1v2', 'children'), Output('parafiltre', 'children'), Output('actifselec', 'children'), Output('nbractifselec', 'children'), #avant CDI Output('actif', 'children'),
+Input('url', 'pathname'), Input('bouton_A/E', 'n_clicks'), Input('bouton_A/UO', 'n_clicks'), Input('menu_langue', 'value'), Input('menu_année', 'value'), 
+State('etat-cache1', 'data'), State('etat-cache2', 'data')
+)
+def update_graph(path, n_click1, n_click2, val, annee, val1, val2): 
+			annee=int(annee) 
+			if annee>=2021:
+				secondannee=2021
+			else: 
+				secondannee=annee 
+			date_actuelle=calculannee(secondannee) 
+			nb_ligneseffectifactifselecc=calculvaldat(annee) #il faut faire en sorte que la valeur reçu puisse être utilisable pour l'affichage de l'effectif actif
+			tableauemploieactifpardate=calculvaldate(date_actuelle)
+			fig2=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardate, title=labels[val]['fig2']['title'], markers=True, text=tableauemploieactifpardate)
+			fig2.update_layout(
+			annotations=[ 
+			dict(text=labels[val]['fig2']['information'],  x=0.5, y=0, xref="paper", yref="paper", showarrow=False, font=dict(size=10)), 
+			dict(text=labels[val]['fig2']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
+			])#avec tozeroy qui veut dire que l'on souhaite remplir le dessous de la courbe jusqu'à l'axe des abscisse  
+			fig2.update_traces(fill='tozeroy', fillcolor='rgba(255, 0, 0, 0.3)', line=dict(color='red')) 
+			ctx=dash.callback_context
+			bouton=ctx.triggered[0]["prop_id"].split(".")[0]   
+			if bouton=="bouton_A/E": 
+				val1=1
+				val2=0
+			elif bouton=="bouton_A/UO": 
+				val1=0
+				val2=1
+			if val1==1:
+				fig1=px.histogram(tableauemploieeffectif, y=labels[val]['fig1']['contenu'], title= labels[val]['fig1']['title'], color_discrete_sequence=['rgb(0, 0, 180)'], text_auto=True) 
+				col1={"display": "inline-block", "width": "13%", "margin-left": "5%", 'backgroundColor': 'red'}
+				col2={"display": "inline-block", "width": "13%", 'backgroundColor': 'white'}
+				fig1.update_layout(
+				yaxis={'categoryorder': 'total ascending'}, 
+				annotations=[
+				dict(text=labels[val]['fig1']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))])
+				return fig1, fig2, labels[val]['button1']['title'], labels[val]['button2']['title'], labels[val]['paralangue']['title'], labels[val]['CDI']['title'], labels[val]['paye']['title'], labels[val]['total']['title'], labels[val]['titre']['title'], col1, col2, val1, val2, labels[val]['parannee']['title'], labels[val]['sous-titre']['title'], labels[val]['paralien1v2']['title'], labels[val]['parafiltre']['title'], labels[val]['actifselec']['title'], nb_ligneseffectifactifselecc 
+			elif val2==1:
+				fig1=px.histogram(tableauemploieeffectif, y=labels[val]['fig3']['contenu'], title= labels[val]['fig3']['title'], color_discrete_sequence=['rgb(0, 0, 180)'], text_auto=True) 
+				col1={"display": "inline-block", "width": "13%", "margin-left": "5%", 'backgroundColor': 'white'}
+				col2={"display": "inline-block", "width": "13%", 'backgroundColor': 'red'}
+				fig1.update_layout(
+				yaxis={'categoryorder': 'total ascending'},
+				annotations=[
+				dict(text=labels[val]['fig3']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
+				])
+				return fig1, fig2, labels[val]['button1']['title'], labels[val]['button2']['title'], labels[val]['paralangue']['title'], labels[val]['CDI']['title'], labels[val]['paye']['title'], labels[val]['total']['title'], labels[val]['titre']['title'], col1, col2, val1, val2, labels[val]['parannee']['title'], labels[val]['sous-titre']['title'], labels[val]['paralien1v2']['title'], labels[val]['parafiltre']['title'], labels[val]['actifselec']['title'], nb_ligneseffectifactifselecc
+
+if __name__=='__main__':  
+	app.run(debug=True)
+#2,5/
