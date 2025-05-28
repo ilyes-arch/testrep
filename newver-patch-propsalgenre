@@ -819,3 +819,4 @@ def update_thirdpage_graph(path, nclick1, nclick2, nclick3, nclick4, nclick5, nc
 if __name__=='__main__':  
 	app.run(debug=True) 
 #temps de lancement:2,13/4,20
+#temps de lancement second test:
