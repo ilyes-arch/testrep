@@ -42,7 +42,7 @@ DIM_PAYE=pandas.merge(contract_withkey, DIM_PAIDLEAVE, on='PaidLeave Key')
 DIM_PAYE=pandas.merge(DIM_PAYE, DIM_EMPLOYEE, on='Employee Key')
 DIM_PAYE=DIM_PAYE[DIM_PAYE["PaidLeave_Taken"]!='0']
 DIM_PAYE=DIM_PAYE.drop_duplicates(subset="Employee Key") #Pour que chaque employé face une unique apparition dans le tableau
-effectifactif=date[date['Status.EN']=='Active'] #Status.EN
+effectifactif=date[date['Status.EN']=='Active'] 
 nb_ligneseffectifactif=len(effectifactif)
 tableauemploieeffectif=pandas.merge(date, FACT, on='Status Key') 
 tableauemploieeffectif=tableauemploieeffectif[tableauemploieeffectif['Status.EN']=='Active'] 
