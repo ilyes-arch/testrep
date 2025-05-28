@@ -252,20 +252,3 @@ def update_graph(n_click1, n_click2, val, annee, val1, val2):
 
 if __name__=='__main__':  
 	app.run(debug=True)
-
-#Sans FACT ligne 25:
-#2,25/5,19
-#Avec FACT ligne 25:
-#2,34/5,20
-#Avec 10 FACT:
-#4,12/8,15
-#Avec 1 Merge: 
-#2,47/6,O1
-#Avec 10 (selec ligne specifique tab):
-#2,42/5,37
-
-
-
-
-#En replaceant FACT2 FACT3 par le FACT:
-#2,26/5,07
