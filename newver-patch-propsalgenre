@@ -818,4 +818,7 @@ def update_thirdpage_graph(path, nclick1, nclick2, nclick3, nclick4, nclick5, nc
 			return fiig1, fiig2, ccol1, ccol2, ccol3, ccol4, ccol5, ccol6, vval1, vval2, vval3, vval4, vval5, vval6, nb_eff_mas, nb_eff_fem
 if __name__=='__main__':  
 	app.run(debug=True) 
-#temps de lancement:2,13/4,20
+#temps de lancement premier essaie:2,13/4,20
+#temps de lancement second essaie: 1,55/3,52
+#temps de lancement troisième essaie:1,59/?
+
