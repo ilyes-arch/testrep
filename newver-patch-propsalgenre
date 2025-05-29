@@ -56,17 +56,18 @@ tableauevolutioneffectif=date[date['Status.EN']=='Active']
 VALDAYPAIDLEAVE=[]
 INTVALDAYPAIDLEAVE=[]
 durecongemax=0
+
 for i in range(len(DIM_PAIDLEAVE)): 
 	a=DIM_PAIDLEAVE["PaidLeave_Taken"][i].replace(",", ".") #Car un float en python est avec un point et pas avec une virgule 
 	INTVALDAYPAIDLEAVE.append(a)
-	b=int(float(INTVALDAYPAIDLEAVE[i]))
+	b=int(float(INTVALDAYPAIDLEAVE[i])) 
 	VALDAYPAIDLEAVE.append(b)
 	if VALDAYPAIDLEAVE[i]>durecongemax:
 		durecongemax=VALDAYPAIDLEAVE[i]
 CROISSANTVALDAYPAIDLEAVE=VALDAYPAIDLEAVE 
 CROISSANTVALDAYPAIDLEAVE.sort() #on classe le tableau de congé par ordre croissant
 moitie=len(DIM_PAIDLEAVE)/2 # on calcule la moitie du tableau d'ordre croissant
-moitie=int(moitie) 
+moitie=int(moitie)
 mediane=CROISSANTVALDAYPAIDLEAVE[moitie] #par définition la mediane est la valeur de la moitié du tableau qui classe les congé par ordre croissant
 
 annee_end=[]
@@ -104,7 +105,7 @@ annee_endpaid=[int(item[0]) for item in annee_endpaid] #même chose pour la tabl
 def salparquantite(table): 
 	data={
 	'Genre': ['Male', 'Female'],
-	'Salaire_Moyen': [0, 0]
+	'Salaire_Moyen': [0.0, 0.0] #On met 0.0 à la place 0 car l'on souhaite mettre des float dans ces cases et donc pour préciser que le type de ces cases est bien à float on met 0.0 à la place de 0
 	}
 	tabsal=pandas.DataFrame(data)
 	m=0
@@ -153,6 +154,7 @@ def calculvaldate(date_actuelle):
 			a=a+b
 		tableauemploieactifpardate.append(a) #on stoque la somme d'employé actif pour une date précise 
 	return tableauemploieactifpardate
+
 def calculvaldateG(date_actuelle, genree):
 	tableauemploieactifpardate=[]
 	nbr_date_totales=5
@@ -327,7 +329,7 @@ def dureemoyenneconge(listeconge):
 		ii=i
 	s=s/ii
 	s=float(s)
-	#s=round(s, 2)
+	s=round(s, 3)
 	return s
 moy=dureemoyenneconge(VALDAYPAIDLEAVE)
 
@@ -453,7 +455,7 @@ options=[{'label': 'filtrage par contrat', 'value': 'Contract_Type.FR'}, {'label
 style={'backgroundColor': 'rgb(192, 164, 132)', 'color': 'rgb(0,0,0)'}
 ), 
 html.Br(),
-html.P(children="filtrage  par:"),
+html.P(children="filtrage  par"),
 html.P(id='parafiltredeux', children=":"),
 html.Br(), 
 dcc.Dropdown( 
@@ -549,6 +551,7 @@ Input('url', 'pathname'), Input('bouton_A/E', 'n_clicks'), Input('bouton_A/UO', 
 State('etat-cache1', 'data'), State('etat-cache2', 'data')
 )
 def update_graph(path, n_click1, n_click2, val, annee, val1, val2): 
+		if path=='/':
 			annee=int(annee) 
 			if annee>=2021:
 				secondannee=2021
@@ -634,7 +637,7 @@ def update_secondpage_graph(path, n_click1, n_click2, annee, filtre, resultfiltr
 			DIM_NOM=DIM_PAYE.drop_duplicates(subset="Emp_FirstName")
 			option=[{'label': opt, 'value': opt} for opt in DIM_NOM["Emp_FirstName"] ] 
 		else: 
-			parafiltre=""
+			parafiltre=":"
 			option=[]  
 			vaal="HAJAR"
 		annee=int(annee) 
@@ -818,7 +821,3 @@ def update_thirdpage_graph(path, nclick1, nclick2, nclick3, nclick4, nclick5, nc
 			return fiig1, fiig2, ccol1, ccol2, ccol3, ccol4, ccol5, ccol6, vval1, vval2, vval3, vval4, vval5, vval6, nb_eff_mas, nb_eff_fem
 if __name__=='__main__':  
 	app.run(debug=True) 
-#temps de lancement premier essaie:2,13/4,20
-#temps de lancement second essaie: 1,55/3,52
-#temps de lancement troisième essaie:1,59/?
-
