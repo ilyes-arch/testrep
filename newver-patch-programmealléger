@@ -9,32 +9,27 @@ from datetime import datetime
 from dash import dash_table
 
 labels = {} 
-labels['Anglais']={'fig1': {'title': "Active effectif", 'subtitle':"/Nationality", 'contenu': "Emp_Nationality.EN"}, 'fig2': {'title': "Evolution of the effectif", 'subtitle': "/year", 'information': "The logarithmic scale has been replaced by the linear scale, because the range of..."}, 'fig3': {'title': "Active effectif", 'subtitle': "/Contract type", 'contenu':"Contract_Type.EN" }, 'button1': {'title':"active effectif/employement"}, 'button2': {'title': "active effectif/Contract type"}, 'paralangue': {'title': "choose your language:"}, 'actif': {'title': "active effectif"}, 'CDI': {'title': "permanent contract effectif"}, 'paye':{'title': "paied effectif"}, 'total':{'title': "total effectif"}, 'titre': {'title': "Dashboard RH"}, 'parannee': {'title': "choose the year:"}, 'sous-titre': {'title': "Global Vue"}, 'paralien1v2': {'title': "next page"}, 'parafiltre': {'title': "your filters: "}, 'actifselec': {'title':"actif effectif selectionned year" }} #'paralien2v1': {'title': "precedent page"} (av parafiltre)
-labels['Français']={'fig1': {'title': "effective actif", 'subtitle': "/Nationalité", 'contenu': "Emp_Nationality.FR"}, 'fig2': {'title': "Evolution de l'effectif", 'subtitle': "/Année", 'information': "L'échelle logarithmique a été remplacée par une échelle linéaire,car la plage de ..."}, 'fig3': {'title': "Effectif actif", 'subtitle': "/Type du contrat", 'contenu': "Contract_Type.FR"}, 'button1': {'title': "Effectif actif/Emploi"}, 'button2': {'title': "Effectif actif/type de contrat"}, 'paralangue': {'title': "Selectionner la langue:"}, 'actif': {'title': "effectif actif"}, 'CDI': {'title': "Effectif en CDI"}, 'paye': {'title': "Effectif payé"}, 'total':{'title': "effectif total"}, 
-'titre': {'title': 'Tableau de Bord RH'}, 'parannee': {'title': "choisissez l'année:"}, 'sous-titre': {'title': "Vue globale"}, 'paralien1v2': {'title': "page suivante"}, 'parafiltre': {'title': "vos filtres:"}, 'figg2':{'title': "Evolution du nombre de conger payé", 'subtitle':"/Année", 'contenu': "Contract_Type_Code"}, 'figg1': {'title': "Nombre de congédiers payé", 'subtitle': "/Nombre de jours de congé (filtrable par nom ou type de contrat)"}, 'figg3': {'title': "Nombre de congédiers payé", 'subtitle':"/Type de contrat du congédier", 'contenu': "Emp_FirstName"}, 'actifselec': {'title':"effectif actif année selectionné "},
-'fiig1': {'title': "genre effectif", 'subtitle': "/augmentation"}, 'fiig3': {'title': "salaire moyen", 'subtitle': "/genre de l'effectif"}, 'fiig2': {'title': "evolution effectif feminin", 'subtitle': "/Année" }, 'fiig4': {'title': "evolution effectif masculin", 'subtitle': "/Année"}, 'fiig6': {'title': "evolution effectif feminin sur effectif total", 'subtitle': "/Année"}, 'fiig8': {'title': "evolution effectif congédiers féminin sur congédiers total", 'subtitle': "/Année", 'information' :"Nous avons fait le choix de retourner un zero lorsque le nombre de congédier total est nul"}}
+labels['Anglais']={'fig1_page1': {'title': "Active effectif", 'subtitle':"/Nationality", 'contenu': "Emp_Nationality.EN"}, 'fig2_page1': {'title': "Evolution of the effectif", 'subtitle': "/year", 'information': "The logarithmic scale has been replaced by the linear scale, because the range of..."}, 'fig3_page1': {'title': "Active effectif", 'subtitle': "/Contract type", 'contenu':"Contract_Type.EN" }, 'button1': {'title':"active effectif/employement"}, 'button2': {'title': "active effectif/Contract type"}, 'paralangue': {'title': "choose your language:"}, 'actif': {'title': "active effectif"}, 'CDI': {'title': "permanent contract effectif"}, 'paye':{'title': "paied effectif"}, 'total':{'title': "total effectif"}, 'titre': {'title': "Dashboard RH"}, 'parannee': {'title': "choose the year:"}, 'sous-titre': {'title': "Global Vue"}, 'paralien1v2': {'title': "next page"}, 'parafiltre': {'title': "your filters: "}, 'actifselec': {'title':"actif effectif selectionned year" }} #'paralien2v1': {'title': "precedent page"} (av parafiltre)
+labels['Français']={'fig1_page1': {'title': "effective actif", 'subtitle': "/Nationalité", 'contenu': "Emp_Nationality.FR"}, 'fig2_page1': {'title': "Evolution de l'effectif", 'subtitle': "/Année", 'information': "L'échelle logarithmique a été remplacée par une échelle linéaire,car la plage de ..."}, 'fig3_page1': {'title': "Effectif actif", 'subtitle': "/Type du contrat", 'contenu': "Contract_Type.FR"}, 'button1': {'title': "Effectif actif/Emploi"}, 'button2': {'title': "Effectif actif/type de contrat"}, 'paralangue': {'title': "Selectionner la langue:"}, 'actif': {'title': "effectif actif"}, 'CDI': {'title': "Effectif en CDI"}, 'paye': {'title': "Effectif payé"}, 'total':{'title': "effectif total"}, 
+'titre': {'title': 'Tableau de Bord RH'}, 'parannee': {'title': "choisissez l'année:"}, 'sous-titre': {'title': "Vue globale"}, 'paralien1v2': {'title': "page suivante"}, 'parafiltre': {'title': "vos filtres:"}, 'fig2_page2':{'title': "Evolution du nombre de conger payé", 'subtitle':"/Année", 'contenu': "Contract_Type_Code"}, 'fig1_page2': {'title': "Nombre de congédiers payé", 'subtitle': "/Nombre de jours de congé (filtrable par nom ou type de contrat)"}, 'fig3_page2': {'title': "Nombre de congédiers payé", 'subtitle':"/Type de contrat du congédier", 'contenu': "Emp_FirstName"}, 'actifselec': {'title':"effectif actif année selectionné "},
+'fig1_page3': {'title': "genre effectif", 'subtitle': "/augmentation"}, 'fiig3': {'title': "salaire moyen", 'subtitle': "/genre de l'effectif"}, 'fig2_page3': {'title': "evolution effectif feminin", 'subtitle': "/Année" }, 'fiig4': {'title': "evolution effectif masculin", 'subtitle': "/Année"}, 'fiig6': {'title': "evolution effectif feminin sur effectif total", 'subtitle': "/Année"}, 'fiig8': {'title': "evolution effectif congédiers féminin sur congédiers total", 'subtitle': "/Année", 'information' :"Nous avons fait le choix de retourner un zero lorsque le nombre de congédier total est nul"}}
 
-DIM_PAIDLEAVE=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_PaidLeave.csv')
-DIM_CONTRACT=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Contract.csv')
-DIM_EMPLOYEE=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Employee.csv')
-date=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Status.csv', usecols=['Status_Start_Date', 'Status_End_Date', 'Status Key', 'Status.EN'])
-FACT=pandas.read_csv('C:/Users/ikarray/Downloads/Fact.csv', usecols=['ES Key', 'Employee Key', 'Contract Key', 'Status Key', 'PaidLeave Key'])
-DIM_EMPFF=DIM_EMPLOYEE[DIM_EMPLOYEE["Emp_Gender.FR"]=='Féminin'] 
-DIM_EMPMM=DIM_EMPLOYEE[DIM_EMPLOYEE["Emp_Gender.FR"]=='Masculin']
-tabeffectifpaye=DIM_EMPLOYEE[DIM_EMPLOYEE["Emp_Salary"]>0]
-tabeffectifpaye=tabeffectifpaye.drop_duplicates(subset="Employee Key")
+DIM_CONTRACT=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Contract.csv', usecols=['Contract Key', 'Contract_Type_Code', 'Contract_Type.FR', 'Contract_Type.EN', 'Contract_Nature_Code']) 
+DIM_EMPLOYEE=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Employee.csv', usecols=['Employee Key', 'Emp_Gender.FR', 'Emp_Gender.EN', 'Emp_Salary', 'Emp_Age', 'Emp_Nationality.EN', 'Emp_Nationality.FR', 'Emp_FirstName', 'Emp_LastName', 'Emp_augmentation', 'Emp_Type'])  
+DIM_EMPLOYEE_UNIQUE=DIM_EMPLOYEE.drop_duplicates(subset="Employee Key")
+DIM_PAIDLEAVE=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_PaidLeave.csv', usecols=['PaidLeave_Start_Date', 'PaidLeave_End_Date', 'PaidLeave Key', 'PaidLeave_Taken'])
+date=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Status.csv', usecols=['Status_Start_Date', 'Status_End_Date', 'Status Key', 'Status.EN']) 
+FACT=pandas.read_csv('C:/Users/ikarray/Downloads/Fact.csv', usecols=['Employee Key', 'Contract Key', 'Status Key', 'PaidLeave Key'])
+FACT=FACT.drop_duplicates(subset=['Employee Key', 'PaidLeave Key', 'Contract Key', 'Status Key'])
+DIM_EMPLOYEE_FEM=DIM_EMPLOYEE[DIM_EMPLOYEE["Emp_Gender.FR"]=='Féminin'] 
+DIM_EMPLOYEE_MAS=DIM_EMPLOYEE[DIM_EMPLOYEE["Emp_Gender.FR"]=='Masculin']
+tabeffectifpaye=DIM_EMPLOYEE_UNIQUE[DIM_EMPLOYEE_UNIQUE["Emp_Salary"]>0]
 nb_ligneseffectifpaye=len(tabeffectifpaye)
-nb_ligneseffectiftotal=len(DIM_EMPLOYEE)
-DIM_CONTRACTT=DIM_CONTRACT[DIM_CONTRACT['Contract_Type_Code']=='CDI']
-effectifcdi=pandas.merge(FACT, DIM_CONTRACTT, on='Contract Key')
+nb_ligneseffectiftotal=len(DIM_EMPLOYEE_UNIQUE)
+effectifcdi=DIM_CONTRACT[DIM_CONTRACT['Contract_Type_Code']=='CDI'] 
+effectifcdi=pandas.merge(FACT, effectifcdi, on='Contract Key') 
 effectifcdi=effectifcdi.drop_duplicates(subset="Employee Key")
 nb_ligneseffectifcdi=len(effectifcdi)
-datecongff=pandas.merge(DIM_PAIDLEAVE, FACT, on='PaidLeave Key')
-datecongff=pandas.merge(datecongff, DIM_EMPFF, on='Employee Key')
-datecongff=datecongff.drop_duplicates(subset="Employee Key")
-datecongmm=pandas.merge(DIM_PAIDLEAVE, FACT, on='PaidLeave Key')
-datecongmm=pandas.merge(datecongmm, DIM_EMPMM, on='Employee Key')
-datecongmm=datecongmm.drop_duplicates(subset="Employee Key")
 contract_withkey=pandas.merge(FACT, DIM_CONTRACT, on='Contract Key')
 contract_withkey=contract_withkey.drop_duplicates(subset="Employee Key")
 DIM_PAYE=pandas.merge(contract_withkey, DIM_PAIDLEAVE, on='PaidLeave Key')
@@ -48,6 +43,7 @@ tableauemploieeffectif=tableauemploieeffectif[tableauemploieeffectif['Status.EN'
 tableauemploieeffectif=pandas.merge(tableauemploieeffectif, DIM_EMPLOYEE, on='Employee Key') 
 tableauemploieeffectif=pandas.merge(tableauemploieeffectif, DIM_CONTRACT, on='Contract Key')
 tableauemploieeffectifnonpaye=tableauemploieeffectif
+tableauemploieeffectifnonpaye=tableauemploieeffectifnonpaye.drop_duplicates(subset="Employee Key")
 tableauemploieeffectifnonpaye=tableauemploieeffectifnonpaye.drop_duplicates(subset="Employee Key").reset_index(drop=True)
 tableauemploieeffectif=tableauemploieeffectif[tableauemploieeffectif["Emp_Salary"]>=0]
 tableauemploieeffectif=tableauemploieeffectif.drop_duplicates(subset="Employee Key").reset_index(drop=True)
@@ -55,7 +51,6 @@ tableauevolutioneffectif=date[date['Status.EN']=='Active']
 VALDAYPAIDLEAVE=[]
 INTVALDAYPAIDLEAVE=[]
 durecongemax=0
-
 for i in range(len(DIM_PAIDLEAVE)): 
 	a=DIM_PAIDLEAVE["PaidLeave_Taken"][i].replace(",", ".") #Car un float en python est avec un point et pas avec une virgule 
 	INTVALDAYPAIDLEAVE.append(a)
@@ -114,9 +109,9 @@ def salparquantite(table):
 			f=f+float(table["Emp_Salary"][i])
 		elif table["Emp_Gender.FR"][i]=="Masculin": 
 			m=m+float(table["Emp_Salary"][i])
-	moysalf=f/(len(DIM_EMPFF))
+	moysalf=f/(len(DIM_EMPLOYEE_FEM))
 	moysalf=round(moysalf, 2)
-	moysalm=m/(len(DIM_EMPMM)) 
+	moysalm=m/(len(DIM_EMPLOYEE_MAS)) 
 	moysalm=round(moysalm, 2)
 	tabsal.loc[0, 'Salaire_Moyen']=moysalf
 	tabsal.loc[1, 'Salaire_Moyen']=moysalm
@@ -160,10 +155,10 @@ def calculvaldateG(date_actuelle, genree):
 	for j in range(nbr_date_totales):
 		a=0
 		if genree==1:
-			DIM_EMPGG=DIM_EMPFF
+			DIM_EMPGG=DIM_EMPLOYEE_FEM
 			lignevalue=lignevaluef
 		elif genree==0:
-			DIM_EMPGG=DIM_EMPMM
+			DIM_EMPGG=DIM_EMPLOYEE_MAS
 			lignevalue=lignevaluem
 		for i in range(len(DIM_EMPGG)):
 			c=lignevalue[i]
@@ -181,10 +176,10 @@ def calculvaldatG(annee, genree):
 	tableauemploieactifpardate=[]
 	a=0
 	if genree==1:
-		DIM_EMPGG=DIM_EMPFF
+		DIM_EMPGG=DIM_EMPLOYEE_FEM
 		lignevalue=lignevaluef
 	elif genree==0:
-		DIM_EMPGG=DIM_EMPMM
+		DIM_EMPGG=DIM_EMPLOYEE_MAS
 		lignevalue=lignevaluem
 	for i in range(len(DIM_EMPGG)):
 		c=lignevalue[i]
@@ -205,7 +200,7 @@ def calculvaldaterapportFparT(date_actuelle):
 	for j in range(nbr_date_totales):
 		af=0
 		am=0
-		for i in range(len(DIM_EMPFF)):
+		for i in range(len(DIM_EMPLOYEE_FEM)):
 			c=lignevaluef[i]
 			c=int(c)
 			if date_actuelle[j]>=annee_start[c]: 
@@ -231,16 +226,16 @@ def calculvaldaterapportFparT(date_actuelle):
 
 
 a=0
-EMPAGE=DIM_EMPFF["Emp_Age"]
-for i in range(len(DIM_EMPFF)):
+EMPAGE=DIM_EMPLOYEE_FEM["Emp_Age"]
+for i in range(len(DIM_EMPLOYEE_FEM)):
 	c=lignevaluef[i]
 	a=a+EMPAGE[c]
 moyagef=a/i
 moyagef=int(moyagef) 
 
 a=0
-EMPAGE=DIM_EMPMM["Emp_Age"]
-for i in range(len(DIM_EMPMM)):
+EMPAGE=DIM_EMPLOYEE_MAS["Emp_Age"]
+for i in range(len(DIM_EMPLOYEE_MAS)):
 	c=lignevaluem[i]
 	a=a+EMPAGE[c]
 moyagem=a/i
@@ -252,7 +247,7 @@ def calculvaldaterapportFCparT(date_actuelle):
 	for j in range(nbr_date_totales):
 		af=0
 		am=0
-		for i in range(len(datecongff)):
+		for i in range(len(lignevaluef)): 
 			c=lignevaluef[i]
 			if date_actuelle[j]>=annee_startpaid[c]:
 				if date_actuelle[j]<=annee_endpaid[c]:
@@ -262,7 +257,7 @@ def calculvaldaterapportFCparT(date_actuelle):
 			else: 
 				b=0
 			af=af+b
-		for i in range(len(datecongmm)):
+		for i in range(len(lignevaluem)):
 			c=lignevaluem[i]
 			if date_actuelle[j]>=annee_startpaid[c]:
 				if date_actuelle[j]<=annee_endpaid[c]:
@@ -272,10 +267,11 @@ def calculvaldaterapportFCparT(date_actuelle):
 			else:
 				b=0
 			am=am+b
-		if am+af!=0: 
+		amf=am+af
+		if amf!=0: 
 			tableauemploieactifpardate.append(af/(am+af))
-		else: #Sachant que la division par 0 n'est pas possible, nous avons choisit la valeur 0 pour ce cas non possible
-			tableauemploieactifpardate.append(0)
+		else:
+			tableauemploieactifpardate.append(-0.1)
 	return tableauemploieactifpardate
 
 def calculvaldat(annee):
@@ -310,13 +306,13 @@ def calculvalconge(date_actuelle):
 	return tableauemploieactifpardate
 def calculvaldateconge(dateactuelle):
 	a=0
-	for i in range(len(date)):  
+	for i in range(len(DIM_EMPLOYEE)):
 		if dateactuelle>=annee_startpaid[i]:
-			if dateactuelle<=annee_endpaid[i]: 
+			if dateactuelle<=annee_endpaid[i]:
 				b=1
-			else: 
+			else:
 				b=0
-		else: 
+		else:
 			b=0
 		a=a+b
 	return a
@@ -559,13 +555,13 @@ def update_graph(path, n_click1, n_click2, val, annee, val1, val2):
 			date_actuelle=calculannee(secondannee) 
 			nb_ligneseffectifactifselecc=calculvaldat(annee) #il faut faire en sorte que la valeur reçu puisse être utilisable pour l'affichage de l'effectif actif
 			tableauemploieactifpardate=calculvaldate(date_actuelle)
-			fig2=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardate, title=labels[val]['fig2']['title'], markers=True, text=tableauemploieactifpardate)
-			fig2.update_layout(
+			fig2_page1=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardate, title=labels[val]['fig2_page1']['title'], markers=True, text=tableauemploieactifpardate)
+			fig2_page1.update_layout(
 			annotations=[ 
-			dict(text=labels[val]['fig2']['information'],  x=0.5, y=0, xref="paper", yref="paper", showarrow=False, font=dict(size=10)), 
-			dict(text=labels[val]['fig2']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
+			dict(text=labels[val]['fig2_page1']['information'],  x=0.5, y=0, xref="paper", yref="paper", showarrow=False, font=dict(size=10)), 
+			dict(text=labels[val]['fig2_page1']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 			])#avec tozeroy qui veut dire que l'on souhaite remplir le dessous de la courbe jusqu'à l'axe des abscisse  
-			fig2.update_traces(fill='tozeroy', fillcolor='rgba(255, 0, 0, 0.3)', line=dict(color='red')) 
+			fig2_page1.update_traces(fill='tozeroy', fillcolor='rgba(255, 0, 0, 0.3)', line=dict(color='red')) 
 			ctx=dash.callback_context
 			bouton=ctx.triggered[0]["prop_id"].split(".")[0]   
 			if bouton=="bouton_A/E": 
@@ -575,24 +571,24 @@ def update_graph(path, n_click1, n_click2, val, annee, val1, val2):
 				val1=0
 				val2=1
 			if val1==1:
-				fig1=px.histogram(tableauemploieeffectifnonpaye, y=labels[val]['fig1']['contenu'], title= labels[val]['fig1']['title'], color_discrete_sequence=['rgb(0, 0, 180)'], text_auto=True) #tableauemploieeffectifnonpaye
+				fig1_page1=px.histogram(tableauemploieeffectifnonpaye, y=labels[val]['fig1_page1']['contenu'], title= labels[val]['fig1_page1']['title'], color_discrete_sequence=['rgb(0, 0, 180)'], text_auto=True) 
 				col1={"display": "inline-block", "width": "13%", "margin-left": "5%", 'backgroundColor': 'red'}
 				col2={"display": "inline-block", "width": "13%", 'backgroundColor': 'white'}
-				fig1.update_layout(
+				fig1_page1.update_layout(
 				yaxis={'categoryorder': 'total ascending'}, 
 				annotations=[
-				dict(text=labels[val]['fig1']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))])
-				return fig1, fig2, labels[val]['button1']['title'], labels[val]['button2']['title'], labels[val]['paralangue']['title'], labels[val]['CDI']['title'], labels[val]['paye']['title'], labels[val]['total']['title'], labels[val]['titre']['title'], col1, col2, val1, val2, labels[val]['parannee']['title'], labels[val]['sous-titre']['title'], labels[val]['paralien1v2']['title'], labels[val]['parafiltre']['title'], labels[val]['actifselec']['title'], nb_ligneseffectifactifselecc 
+				dict(text=labels[val]['fig1_page1']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))])
+				return fig1_page1, fig2_page1, labels[val]['button1']['title'], labels[val]['button2']['title'], labels[val]['paralangue']['title'], labels[val]['CDI']['title'], labels[val]['paye']['title'], labels[val]['total']['title'], labels[val]['titre']['title'], col1, col2, val1, val2, labels[val]['parannee']['title'], labels[val]['sous-titre']['title'], labels[val]['paralien1v2']['title'], labels[val]['parafiltre']['title'], labels[val]['actifselec']['title'], nb_ligneseffectifactifselecc 
 			elif val2==1:
-				fig1=px.histogram(tableauemploieeffectifnonpaye, y=labels[val]['fig3']['contenu'], title=labels[val]['fig3']['title'], color_discrete_sequence=['rgb(0, 0, 180)'], text_auto=True) #tableauemploieeffectifnonpaye
+				fig1_page1=px.histogram(tableauemploieeffectifnonpaye, y=labels[val]['fig3_page1']['contenu'], title=labels[val]['fig3_page1']['title'], color_discrete_sequence=['rgb(0, 0, 180)'], text_auto=True) 
 				col1={"display": "inline-block", "width": "13%", "margin-left": "5%", 'backgroundColor': 'white'}
 				col2={"display": "inline-block", "width": "13%", 'backgroundColor': 'red'}
-				fig1.update_layout(
+				fig1_page1.update_layout(
 				yaxis={'categoryorder': 'total ascending'},
 				annotations=[
-				dict(text=labels[val]['fig3']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
+				dict(text=labels[val]['fig3_page1']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 				])
-				return fig1, fig2, labels[val]['button1']['title'], labels[val]['button2']['title'], labels[val]['paralangue']['title'], labels[val]['CDI']['title'], labels[val]['paye']['title'], labels[val]['total']['title'], labels[val]['titre']['title'], col1, col2, val1, val2, labels[val]['parannee']['title'], labels[val]['sous-titre']['title'], labels[val]['paralien1v2']['title'], labels[val]['parafiltre']['title'], labels[val]['actifselec']['title'], nb_ligneseffectifactifselecc
+				return fig1_page1, fig2_page1, labels[val]['button1']['title'], labels[val]['button2']['title'], labels[val]['paralangue']['title'], labels[val]['CDI']['title'], labels[val]['paye']['title'], labels[val]['total']['title'], labels[val]['titre']['title'], col1, col2, val1, val2, labels[val]['parannee']['title'], labels[val]['sous-titre']['title'], labels[val]['paralien1v2']['title'], labels[val]['parafiltre']['title'], labels[val]['actifselec']['title'], nb_ligneseffectifactifselecc
 @app.callback(Output('page-content', 'children'), Input('url', 'pathname')
 ) 
 def display_page(pathname): 
@@ -648,11 +644,11 @@ def update_secondpage_graph(path, n_click1, n_click2, annee, filtre, resultfiltr
 		date_actuelle=calculannee(secondannee)
 		congedateactuelle=calculvaldateconge(annee)
 		tableauemploieactifpardate=calculvalconge(date_actuelle)
-		figg2=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardate, title=labels['Français']['figg2']['title'], markers=True, text=tableauemploieactifpardate) 
-		figg2.update_traces(fill='tozeroy', fillcolor='rgba(40, 125, 145, 0.3)', line=dict(color='rgb(0, 0, 255)')) 
-		figg2.update_layout(  
+		fig2_page2=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardate, title=labels['Français']['fig2_page2']['title'], markers=True, text=tableauemploieactifpardate) 
+		fig2_page2.update_traces(fill='tozeroy', fillcolor='rgba(40, 125, 145, 0.3)', line=dict(color='rgb(0, 0, 255)')) 
+		fig2_page2.update_layout(  
 			annotations=[
-			dict(text=labels['Français']['figg2']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
+			dict(text=labels['Français']['fig2_page2']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 			]) 
 		ctx=dash.callback_context
 		bouton=ctx.triggered[0]["prop_id"].split(".")[0]
@@ -669,13 +665,13 @@ def update_secondpage_graph(path, n_click1, n_click2, annee, filtre, resultfiltr
 				DIM_PAYE_FILTRE=DIM_PAYE[DIM_PAYE["Emp_FirstName"]==resultfiltre]
 			else: 
 				DIM_PAYE_FILTRE=DIM_PAYE
-			figg1=px.histogram(DIM_PAYE_FILTRE, y='PaidLeave_Taken', title=labels['Français']['figg1']['title'], color_discrete_sequence=['rgb(255,0,0)'], text_auto=True) 
+			fig1_page2=px.histogram(DIM_PAYE_FILTRE, y='PaidLeave_Taken', title=labels['Français']['fig1_page2']['title'], color_discrete_sequence=['rgb(255,0,0)'], text_auto=True) 
 			coll1={"display": "inline-block", "width": "13%", "margin-left": "40%", 'backgroundColor': 'red'}
 			coll2={"display": "inline-block", "width": "13%", 'backgroundColor': 'rgb(192, 164, 132)'}
-			figg1.update_layout(
+			fig1_page2.update_layout(
 			yaxis={'categoryorder': 'total ascending'}, 
 			annotations=[ 
-			dict(text=labels['Français']['figg1']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=11.5))
+			dict(text=labels['Français']['fig1_page2']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=11.5))
 			])
 
 			if filtre==None: 
@@ -685,15 +681,15 @@ def update_secondpage_graph(path, n_click1, n_click2, annee, filtre, resultfiltr
 				NEW_TAB=DIM_PAYE[DIM_PAYE[filtre]==resultfiltre] 
 				DIM_PAYE_AFFICHE=NEW_TAB[["Contract_Type_Code", "Contract_Nature_Code", "Emp_FirstName", "Emp_LastName", "Emp_Type", "Emp_Salary", "PaidLeave_Taken", "PaidLeave_Start_Date", "PaidLeave_End_Date", "Emp_Nationality.FR"]]
 				tableau=dash_table.DataTable(columns=[{"name": col, "id": col} for col in DIM_PAYE_AFFICHE.columns], data=DIM_PAYE_AFFICHE.to_dict("records"))
-			return figg1, figg2, coll1, coll2, vall1, vall2, tableau, option, parafiltre, congedateactuelle, vaal
+			return fig1_page2, fig2_page2, coll1, coll2, vall1, vall2, tableau, option, parafiltre, congedateactuelle, vaal
 		elif vall2==1: 
-			figg1=px.histogram(DIM_PAYE, y='Contract_Type.FR', title=labels['Français']['figg3']['title'], color_discrete_sequence=['rgb(255, 0, 0)'], text_auto=True)
+			fig1_page2=px.histogram(DIM_PAYE, y='Contract_Type.FR', title=labels['Français']['fig3_page2']['title'], color_discrete_sequence=['rgb(255, 0, 0)'], text_auto=True)
 			coll1={"display": "inline-block", "width": "13%", "margin-left": "40%", 'backgroundColor': 'rgb(192, 164, 132)'} 
 			coll2={"display": "inline-block", "width": "13%", 'backgroundColor': 'red'}  
-			figg1.update_layout(  
+			fig1_page2.update_layout(  
 			yaxis={'categoryorder': 'total ascending'},
 			annotations=[
-			dict(text=labels['Français']['figg3']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
+			dict(text=labels['Français']['fig3_page2']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 			])
 			if filtre==None: 
 				DIM_PAYE_AFFICHE=DIM_PAYE[["Contract_Type_Code", "Contract_Nature_Code", "Emp_FirstName", "Emp_LastName", "Emp_Type", "Emp_Salary", "PaidLeave_Taken", "PaidLeave_Start_Date", "PaidLeave_End_Date", "Emp_Nationality.FR"]]
@@ -702,7 +698,7 @@ def update_secondpage_graph(path, n_click1, n_click2, annee, filtre, resultfiltr
 				NEW_TAB=DIM_PAYE[DIM_PAYE[filtre]==resultfiltre] 
 				DIM_PAYE_AFFICHE=NEW_TAB[["Contract_Type_Code", "Contract_Nature_Code", "Emp_FirstName", "Emp_LastName", "Emp_Type", "Emp_Salary", "PaidLeave_Taken", "PaidLeave_Start_Date", "PaidLeave_End_Date", "Emp_Nationality.FR"]]
 				tableau=dash_table.DataTable(columns=[{"name": col, "id": col} for col in DIM_PAYE_AFFICHE], data=DIM_PAYE_AFFICHE.to_dict("records"))
-			return figg1, figg2, coll1, coll2, vall1, vall2, tableau, option, parafiltre, congedateactuelle, vaal 
+			return fig1_page2, fig2_page2, coll1, coll2, vall1, vall2, tableau, option, parafiltre, congedateactuelle, vaal 
 @app.callback(
 Output('graphcinq', 'figure'), Output('graphsix', 'figure'), Output('bouton_G/S', 'style'), Output('bouton_G/C', 'style'), Output('bouton_M', 'style'), Output('bouton_F', 'style'), Output('bouton_R', 'style'), Output('bouton_RI', 'style'), Output('etat--cache1', 'data'), Output('etat--cache2', 'data'), Output('etat--cache3', 'data'), Output('etat--cache4', 'data'), Output('etat--cache5', 'data'), Output('etat--cache6', 'data'), Output('paraffectifmas', 'children'), Output('paraffectiffem', 'children'),
 Input('url', 'pathname'), Input('bouton_G/S', 'n_clicks'), Input('bouton_G/C', 'n_clicks'), Input('bouton_M', 'n_clicks'), Input('bouton_F', 'n_clicks'), Input('bouton_R', 'n_clicks'), Input('bouton_RI', 'n_clicks'), Input('menu_annee_pagetrois', 'value'), State('etat--cache1', 'data'), State('etat--cache2', 'data'), State('etat--cache3', 'data'), State('etat--cache4', 'data'), State('etat--cache5', 'data'), State('etat--cache6', 'data')
@@ -746,49 +742,49 @@ def update_thirdpage_graph(path, nclick1, nclick2, nclick3, nclick4, nclick5, nc
 		if vval1==1:
 			ccol1={"display": "inline-block", "width": "15%", "margin-left": "0%", 'backgroundColor': 'rgb(177, 156, 217)'}
 			ccol2={"display": "inline-block", "width": "15%", "margin-left": "0%", 'backgroundColor': 'rgb(255,255,255)'}
-			fiig1=px.histogram(DIM_EMPLOYEE, x='Emp_augmentation', y='Emp_Gender.FR', title= labels['Français']['fiig1']['title'], color_discrete_sequence=['rgb(0, 0, 180)'], text_auto=True)
-			fiig1.update_layout(  
+			fig1_page3=px.histogram(DIM_EMPLOYEE, x='Emp_augmentation', y='Emp_Gender.FR', title= labels['Français']['fig1_page3']['title'], color_discrete_sequence=['rgb(0, 0, 180)'], text_auto=True)
+			fig1_page3.update_layout(  
 			annotations=[
-			dict(text=labels['Français']['fiig1']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
+			dict(text=labels['Français']['fig1_page3']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 			]) 
 		elif vval2==1:
 			ccol1={"display": "inline-block", "width": "15%", "margin-left": "0%", 'backgroundColor': 'rgb(255, 255, 255)'}
 			ccol2={"display": "inline-block", "width": "15%", "margin-left": "0%", 'backgroundColor': 'rgb(177, 156, 217)'}
 			sal=salparquantite(tableauemploieeffectif)
-			fiig1=px.histogram(sal, x='Salaire_Moyen', y='Genre', title=labels['Français']['fiig3']['title'], color_discrete_sequence=['rgb(0,0,180)'], text_auto=True)
-			fiig1.update_layout(
+			fig1_page3=px.histogram(sal, x='Salaire_Moyen', y='Genre', title=labels['Français']['fiig3']['title'], color_discrete_sequence=['rgb(0,0,180)'], text_auto=True)
+			fig1_page3.update_layout(
 			yaxis={'categoryorder': 'total ascending'},
 			annotations=[ 
 			dict(text=labels['Français']['fiig3']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 			])
-		nb_eff_mas=calculvaldatG(annee, 0)
-		nb_eff_fem=calculvaldatG(annee, 1)
+		nb_effectif_mas=calculvaldatG(annee, 0)
+		nb_effectif_fem=calculvaldatG(annee, 1)
 		if vval3==1: 
 			tableauemploieactifpardateF=calculvaldateG(date_actuelle,1)
 			ccol3={"display": "inline-block", "width": "8%", "margin-left": "10%", 'backgroundColor': 'rgb(255, 255, 255)'}
 			ccol4={"display": "inline-block", "width": "8%", "margin-left": "0%", 'backgroundColor': 'rgb(177, 156, 217)'} 
 			ccol5={"display": "inline-block", "width": "8%", "margin-left": "0%", 'backgroundColor': 'rgb(255, 255, 255)'}
 			ccol6={"display": "inline-block", "width": "8%", "margin-left": "0%", 'backgroundColor': 'rgb(255, 255, 255)'}
-			fiig2=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardateF, title=labels['Français']['fiig2']['title'], markers=True, text=tableauemploieactifpardateF)
-			fiig2.update_layout(
+			fig2_page3=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardateF, title=labels['Français']['fig2_page3']['title'], markers=True, text=tableauemploieactifpardateF)
+			fig2_page3.update_layout(
 			annotations=[
-			dict(text=labels['Français']['fiig2']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
+			dict(text=labels['Français']['fig2_page3']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 			])
-			fiig2.update_traces(fill='tozeroy', fillcolor='rgb(255, 192, 203)', line=dict(color='rgb(255, 0,0)')) 
-			return fiig1, fiig2, ccol1, ccol2, ccol3, ccol4, ccol5, ccol6, vval1, vval2, vval3, vval4, vval5, vval6, nb_eff_mas, nb_eff_fem
+			fig2_page3.update_traces(fill='tozeroy', fillcolor='rgb(255, 192, 203)', line=dict(color='rgb(255, 0,0)')) 
+			return fig1_page3, fig2_page3, ccol1, ccol2, ccol3, ccol4, ccol5, ccol6, vval1, vval2, vval3, vval4, vval5, vval6, nb_effectif_mas, nb_effectif_fem
 		elif vval4==1:
 			tableauemploieactifpardateM=calculvaldateG(date_actuelle, 0)
 			ccol3={"display": "inline-block", "width": "8%", "margin-left": "10%", 'backgroundColor': 'rgb(177, 156, 217)'}
 			ccol4={"display": "inline-block", "width": "8%", "margin-left": "0%", 'backgroundColor': 'rgb(255, 255, 255)'}
 			ccol5={"display": "inline-block", "width": "8%", "margin-left": "0%", 'backgroundColor': 'rgb(255, 255, 255)'}
 			ccol6={"display": "inline-block", "width": "8%", "margin-left": "0%", 'backgroundColor': 'rgb(255, 255, 255)'}
-			fiig2=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardateM, title=labels['Français']['fiig4']['title'], markers=True, text=tableauemploieactifpardateM)
-			fiig2.update_layout(
+			fig2_page3=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardateM, title=labels['Français']['fiig4']['title'], markers=True, text=tableauemploieactifpardateM)
+			fig2_page3.update_layout(
 			annotations=[
 			dict(text=labels['Français']['fiig4']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 			])
-			fiig2.update_traces(fill='tozeroy', fillcolor='rgb(25, 25, 112)', line=dict(color='black')) 
-			return fiig1, fiig2, ccol1, ccol2, ccol3, ccol4, ccol5, ccol6, vval1, vval2, vval3, vval4, vval5, vval6, nb_eff_mas, nb_eff_fem
+			fig2_page3.update_traces(fill='tozeroy', fillcolor='rgb(25, 25, 112)', line=dict(color='black')) 
+			return fig1_page3, fig2_page3, ccol1, ccol2, ccol3, ccol4, ccol5, ccol6, vval1, vval2, vval3, vval4, vval5, vval6, nb_effectif_mas, nb_effectif_fem
 		elif vval5==1: 
 			tableauemploieactifpardateR=calculvaldaterapportFparT(date_actuelle)
 			ccol3={"display": "inline-block", "width": "8%", "margin-left": "10%", 'backgroundColor': 'rgb(255, 255, 255)'}
@@ -796,13 +792,13 @@ def update_thirdpage_graph(path, nclick1, nclick2, nclick3, nclick4, nclick5, nc
 			ccol5={"display": "inline-block", "width": "8%", "margin-left": "0%", 'backgroundColor': 'rgb(177, 156, 217)'}
 			ccol6={"display": "inline-block", "width": "8%", "margin-left": "0%", 'backgroundColor': 'rgb(255, 255, 255)'}
 			roundtab=roundtabs(tableauemploieactifpardateR)
-			fiig2=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardateR, title=labels['Français']['fiig6']['title'], markers=True, text=roundtab) 
-			fiig2.update_layout(
+			fig2_page3=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardateR, title=labels['Français']['fiig6']['title'], markers=True, text=roundtab) 
+			fig2_page3.update_layout(
 			annotations=[
 			dict(text=labels['Français']['fiig6']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 			]) 
-			fiig2.update_traces(fill='tozeroy', fillcolor='rgba(0,0,0, 0.3)', line=dict(color='black')) 
-			return fiig1, fiig2, ccol1, ccol2, ccol3, ccol4, ccol5, ccol6, vval1, vval2, vval3, vval4, vval5, vval6, nb_eff_mas, nb_eff_fem
+			fig2_page3.update_traces(fill='tozeroy', fillcolor='rgba(0,0,0, 0.3)', line=dict(color='black')) 
+			return fig1_page3, fig2_page3, ccol1, ccol2, ccol3, ccol4, ccol5, ccol6, vval1, vval2, vval3, vval4, vval5, vval6, nb_effectif_mas, nb_effectif_fem
 		elif vval6==1:
 			tableauemploieactifpardateRI=calculvaldaterapportFCparT(date_actuelle)
 			ccol3={"display": "inline-block", "width": "8%", "margin-left": "10%", 'backgroundColor': 'rgb(255, 255, 255)'}
@@ -810,17 +806,13 @@ def update_thirdpage_graph(path, nclick1, nclick2, nclick3, nclick4, nclick5, nc
 			ccol5={"display": "inline-block", "width": "8%", "margin-left": "0%", 'backgroundColor': 'rgb(255, 255, 255)'}
 			ccol6={"display": "inline-block", "width": "8%", "margin-left": "0%", 'backgroundColor': 'rgb(177, 156, 217)'}
 			roundtab=roundtabs(tableauemploieactifpardateRI)
-			fiig2=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardateRI, title=labels['Français']['fiig8']['title'], markers=True, text=roundtab)
-			fiig2.update_layout(
+			fig2_page3=px.line(DIM_EMPLOYEE, x=date_actuelle, y=tableauemploieactifpardateRI, title=labels['Français']['fiig8']['title'], markers=True, text=roundtab)
+			fig2_page3.update_layout(
 			annotations=[ 
 			dict(text=labels['Français']['fiig8']['information'], x=0.5, y=0, xref="paper", yref="paper", showarrow=False, font=dict(size=10)),
 			dict(text=labels['Français']['fiig8']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 			])
-			fiig2.update_traces(fill='tozeroy', fillcolor='rgba(0, 255, 0, 0.3)', line=dict(color='black')) 
-			return fiig1, fiig2, ccol1, ccol2, ccol3, ccol4, ccol5, ccol6, vval1, vval2, vval3, vval4, vval5, vval6, nb_eff_mas, nb_eff_fem
+			fig2_page3.update_traces(fill='tozeroy', fillcolor='rgba(0, 255, 0, 0.3)', line=dict(color='black')) 
+			return fig1_page3, fig2_page3, ccol1, ccol2, ccol3, ccol4, ccol5, ccol6, vval1, vval2, vval3, vval4, vval5, vval6, nb_effectif_mas, nb_effectif_fem
 if __name__=='__main__':  
 	app.run(debug=True) 
-#temps de lancement du programme:
-#temps du premier essaye: 2,07/4,11 (min)
-#temps du second essaye: 2,11/4,22 (min)
-#temps du troisième essaye: 2,11/4,21 (min)
