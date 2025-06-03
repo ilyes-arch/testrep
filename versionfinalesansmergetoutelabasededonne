@@ -809,4 +809,4 @@ def update_thirdpage_graph(path, nclick1, nclick2, nclick3, nclick4, nclick5, nc
 			fig2_page3.update_traces(fill='tozeroy', fillcolor='rgba(0, 255, 0, 0.3)', line=dict(color='black')) 
 			return fig1_page3, fig2_page3, couleurbouton1_page3, couleurbouton2_page3, couleurbouton3_page3, couleurbouton4_page3, couleurbouton5_page3, couleurbouton6_page3, valbouton1_page3, valbouton2_page3, valbouton3_page3, valbouton4_page3, valbouton5_page3, valbouton6_page3, nb_effectif_mas, nb_effectif_fem
 if __name__=='__main__':  
-	app.run(debug=True) 
+	app.run(debug=True)  
