@@ -26,7 +26,9 @@ BDD=pandas.merge(BDD, DIM_CONTRACT, on='Contract Key')
 BDD=pandas.merge(BDD, DIM_PAIDLEAVE, on='PaidLeave Key')
 BDD=pandas.merge(BDD, date, on='Status Key')
 DIM_EMPLOYEEUNIQUE_FEM=DIM_EMPLOYEE_UNIQUE[DIM_EMPLOYEE_UNIQUE["Emp_Gender.FR"]=='Féminin'] 
+DIM_EMPLOYEEUNIQUE_FEM=DIM_EMPLOYEEUNIQUE_FEM.reset_index(drop=True)
 DIM_EMPLOYEEUNIQUE_MAS=DIM_EMPLOYEE_UNIQUE[DIM_EMPLOYEE_UNIQUE["Emp_Gender.FR"]=='Masculin']
+DIM_EMPLOYEEUNIQUE_MAS=DIM_EMPLOYEEUNIQUE_MAS.reset_index(drop=True)
 tabeffectifpaye=DIM_EMPLOYEE_UNIQUE[DIM_EMPLOYEE_UNIQUE["Emp_Salary"]>0]
 tabeffectifpaye=tabeffectifpaye.reset_index(drop=True)
 nb_ligneseffectifpaye=len(tabeffectifpaye)
@@ -46,6 +48,7 @@ tableauemploieeffectifnonpaye=tableauemploieeffectifactif
 tableauemploieeffectifnonpaye=tableauemploieeffectifnonpaye.drop_duplicates(subset="Employee Key").reset_index(drop=True)
 tableauemploieeffectifactif=tableauemploieeffectifactif[tableauemploieeffectifactif["Emp_Salary"]>=0]
 tableauemploieeffectifactif=tableauemploieeffectifactif.drop_duplicates(subset="Employee Key").reset_index(drop=True)
+tableauemploieeffectif=BDD.drop_duplicates(subset="Employee Key").reset_index(drop=True)
 DUREECONGE=[]
 LIST_DUREECONGE=[]
 durecongemax=0
@@ -162,9 +165,9 @@ def calculactifpardateG(date_actuelle, genree): #Calcul le nombre d'effectif act
 			DIM_EMPG=DIM_EMPLOYEEUNIQUE_MAS
 			lignevalue=lignevaluem
 		for i in range(len(DIM_EMPG)):
-			c=lignevalue[i]
-			if date_actuelle[j]>=annee_start[c]: 
-				if date_actuelle[j]<=annee_end[c]: 
+			#c=lignevalue[i]
+			if date_actuelle[j]>=annee_start[i]: 
+				if date_actuelle[j]<=annee_end[i]: 
 					b=1
 				else: 
 					b=0
@@ -183,9 +186,9 @@ def calculactifpardatG(annee, genree): #Même fonction que calculactifpardateG m
 		DIM_EMPG=DIM_EMPLOYEEUNIQUE_MAS
 		lignevalue=lignevaluem
 	for i in range(len(DIM_EMPG)):
-		c=lignevalue[i]
-		if annee>=annee_start[c]: 
-			if annee<=annee_end[c]: 
+		#c=lignevalue[i]
+		if annee>=annee_start[i]: 
+			if annee<=annee_end[i]: 
 				b=1
 			else: 
 				b=0
@@ -202,20 +205,20 @@ def calculrapportfeminin_totalpardate(date_actuelle): #calcul l'evolution du rap
 		af=0
 		am=0
 		for i in range(len(DIM_EMPLOYEEUNIQUE_FEM)):
-			c=lignevaluef[i]
-			c=int(c)
-			if date_actuelle[j]>=annee_start[c]: 
-				if date_actuelle[j]<=annee_end[c]: 
+			#c=lignevaluef[i]
+			#c=int(c)
+			if date_actuelle[j]>=annee_start[i]: 
+				if date_actuelle[j]<=annee_end[i]: 
 					b=1
 				else: 
 					b=0
 			else: 
 				b=0
 			af=af+b
-			c=lignevaluem[i]
-			c=int(c)
-			if date_actuelle[j]>=annee_start[c]: 
-				if date_actuelle[j]<=annee_end[c]: 
+			#c=lignevaluem[i]
+			#c=int(c)
+			if date_actuelle[j]>=annee_start[i]: 
+				if date_actuelle[j]<=annee_end[i]: 
 					b=1
 				else: 
 					b=0
@@ -228,16 +231,16 @@ def calculrapportfeminin_totalpardate(date_actuelle): #calcul l'evolution du rap
 somme_age_fem=0
 EMPAGE=DIM_EMPLOYEEUNIQUECONGE_FEM["Emp_Age"]
 for i in range(len(DIM_EMPLOYEEUNIQUECONGE_FEM)): 
-	c=lignevaluefpaye[i]
-	somme_age_fem=somme_age_fem+EMPAGE[c]
+	#c=lignevaluefpaye[i]
+	somme_age_fem=somme_age_fem+EMPAGE[i]
 moyagefeminin=somme_age_fem/(len(DIM_EMPLOYEEUNIQUECONGE_FEM)-1)
 moyagefeminin=int(moyagefeminin) 
 
 somme_age_mas=0
 EMPAGE=DIM_EMPLOYEEUNIQUECONGE_MAS["Emp_Age"]
 for i in range(len(DIM_EMPLOYEEUNIQUECONGE_MAS)):
-	c=lignevaluempaye[i]
-	somme_age_mas=somme_age_mas+EMPAGE[c]
+	#c=lignevaluempaye[i]
+	somme_age_mas=somme_age_mas+EMPAGE[i]
 moyagemasculin=somme_age_mas/(len(DIM_EMPLOYEEUNIQUECONGE_MAS)-1)
 moyagemasculin=int(moyagemasculin)
 
@@ -248,9 +251,9 @@ def calculrapportcongedierfeminin_congediertotalpardate(date_actuelle): #calcul 
 		af=0
 		am=0
 		for i in range(len(lignevaluefpaye)): 
-			c=lignevaluefpaye[i]
-			if date_actuelle[j]>=annee_startpaid[c]:
-				if date_actuelle[j]<=annee_endpaid[c]:
+			#c=lignevaluefpaye[i]
+			if date_actuelle[j]>=annee_startpaid[i]:
+				if date_actuelle[j]<=annee_endpaid[i]:
 					b=1
 				else: 
 					b=0
@@ -258,9 +261,9 @@ def calculrapportcongedierfeminin_congediertotalpardate(date_actuelle): #calcul 
 				b=0
 			af=af+b
 		for i in range(len(lignevaluempaye)):
-			c=lignevaluempaye[i]
-			if date_actuelle[j]>=annee_startpaid[c]:
-				if date_actuelle[j]<=annee_endpaid[c]:
+			#c=lignevaluempaye[i]
+			if date_actuelle[j]>=annee_startpaid[i]:
+				if date_actuelle[j]<=annee_endpaid[i]:
 					b=1
 				else:
 					b=0
@@ -807,4 +810,8 @@ def update_thirdpage_graph(path, nclick1, nclick2, nclick3, nclick4, nclick5, nc
 			fig2_page3.update_traces(fill='tozeroy', fillcolor='rgba(0, 255, 0, 0.3)', line=dict(color='black')) 
 			return fig1_page3, fig2_page3, couleurbouton1_page3, couleurbouton2_page3, couleurbouton3_page3, couleurbouton4_page3, couleurbouton5_page3, couleurbouton6_page3, valbouton1_page3, valbouton2_page3, valbouton3_page3, valbouton4_page3, valbouton5_page3, valbouton6_page3, nb_effectif_mas, nb_effectif_fem
 if __name__=='__main__':  
-	app.run(debug=True) 
+	app.run(debug=True) #Duree de lancement 1er essaie:
+#Duree de lancement 2eme essaie:
+#Duree de lancement 3eme essaie:
+#Duree de lancement 4eme essaie:
+#Duree de lancement 5eme essaie
