@@ -38,7 +38,9 @@ tableaueffectifconge=DIM_PAYE.drop_duplicates(subset="Employee Key").reset_index
 DIM_PAYE=DIM_PAYE[DIM_PAYE["PaidLeave_Taken"]!='0']
 DIM_PAYE=DIM_PAYE.drop_duplicates(subset="Employee Key").reset_index(drop=True) #Pour que chaque employé face une unique apparition dans le tableau
 DIM_EMPLOYEEUNIQUECONGE_FEM=DIM_PAYE[DIM_PAYE["Emp_Gender.FR"]=='Féminin'] 
+DIM_EMPLOYEEUNIQUECONGE_FEM=DIM_EMPLOYEEUNIQUECONGE_FEM.reset_index(drop=True)
 DIM_EMPLOYEEUNIQUECONGE_MAS=DIM_PAYE[DIM_PAYE["Emp_Gender.FR"]=='Masculin']
+DIM_EMPLOYEEUNIQUECONGE_MAS=DIM_EMPLOYEEUNIQUECONGE_MAS.reset_index(drop=True)
 tableauemploieeffectifactif=pandas.merge(date, FACT, on='Status Key') 
 tableauemploieeffectifactif=pandas.merge(tableauemploieeffectifactif, DIM_EMPLOYEE, on='Employee Key') 
 tableauemploieeffectif=tableauemploieeffectifactif.drop_duplicates(subset="Employee Key").reset_index(drop=True)
