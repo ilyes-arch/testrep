@@ -1,3 +1,4 @@
+
 import plotly.express as px
 import pandas
 import dash
@@ -9,9 +10,9 @@ from datetime import datetime
 from dash import dash_table
 
 labels = {} 
-labels['Anglais']={'fig1_page1': {'title': "Active effectif", 'subtitle':"/Nationality", 'contenu': "Emp_Nationality.EN"}, 'fig2_page1': {'title': "Evolution of the effectif", 'subtitle': "/year", 'information': "The logarithmic scale has been replaced by the linear scale, because the range of..."}, 'fig3_page1': {'title': "Active effectif", 'subtitle': "/Contract type", 'contenu':"Contract_Type.EN" }, 'button1': {'title':"active effectif/Nationality"}, 'button2': {'title': "active effectif/Contract type"}, 'paralangue': {'title': "choose your language:"}, 'CDI': {'title': "permanent contract effectif"}, 'effectif_paye':{'title': "paied effectif"}, 'effectif_total':{'title': "total effectif"}, 'titre': {'title': "Dashboard RH"}, 'parannee': {'title': "choose the year:"}, 'sous-titre': {'title': "Global Vue"}, 'paralien1vers2': {'title': "next page"}, 'parae': {'title': "your filters: "}, 'actifselec': {'title':"actif effectif selectionned year" }}
+labels['Anglais']={'fig1_page1': {'title': "Active effectif", 'subtitle':"/Nationality", 'contenu': "Emp_Nationality.EN"}, 'fig2_page1': {'title': "Evolution of the effectif", 'subtitle': "/year", 'information': "The logarithmic scale has been replaced by the linear scale, because the range of..."}, 'fig3_page1': {'title': "Active effectif", 'subtitle': "/Contract type", 'contenu':"Contract_Type.EN" }, 'button1': {'title':"active effectif/Nationality"}, 'button2': {'title': "active effectif/Contract type"}, 'paralangue': {'title': "choose your language:"}, 'CDI': {'title': "permanent contract effectif"}, 'effectif_paye':{'title': "paied effectif"}, 'effectif_total':{'title': "total effectif"}, 'titre': {'title': "Dashboard RH"}, 'parannee': {'title': "choose the year:"}, 'sous-titre': {'title': "Global Vue"}, 'paralien1vers2': {'title': "next page"}, 'parafiltre': {'title': "your filters: "}, 'actifselec': {'title':"actif effectif selectionned year" }}
 labels['Français']={'fig1_page1': {'title': "effective actif", 'subtitle': "/Nationalité", 'contenu': "Emp_Nationality.FR"}, 'fig2_page1': {'title': "Evolution de l'effectif", 'subtitle': "/Année", 'information': "L'échelle logarithmique a été remplacée par une échelle linéaire,car la plage de ..."}, 'fig3_page1': {'title': "Effectif actif", 'subtitle': "/Type du contrat", 'contenu': "Contract_Type.FR"}, 'button1': {'title': "Effectif actif/Nationalité"}, 'button2': {'title': "Effectif actif/type de contrat"}, 'paralangue': {'title': "Selectionner la langue:"}, 'CDI': {'title': "Effectif en CDI"}, 'effectif_paye': {'title': "Effectif payé"}, 'effectif_total':{'title': "effectif total"}, 
-'titre': {'title': 'Tableau de Bord RH'}, 'parannee': {'title': "choisissez l'année:"}, 'sous-titre': {'title': "Vue globale"}, 'paralien1vers2': {'title': "page suivante"}, 'parae': {'title': "vos es:"}, 'fig2_page2':{'title': "Evolution du nombre de conger payé", 'subtitle':"/Année", 'contenu': "Contract_Type_Code"}, 'fig1_page2': {'title': "Nombre de congédiers payé", 'subtitle': "/Nombre de jours de congé (able par nom ou type de contrat)"}, 'fig3_page2': {'title': "Nombre de congédiers payé", 'subtitle':"/Type de contrat du congédier", 'contenu': "Emp_FirstName"}, 'actifselec': {'title':"effectif actif année selectionné "},
+'titre': {'title': 'Tableau de Bord RH'}, 'parannee': {'title': "choisissez l'année:"}, 'sous-titre': {'title': "Vue globale"}, 'paralien1vers2': {'title': "page suivante"}, 'parafiltre': {'title': "vos es:"}, 'fig2_page2':{'title': "Evolution du nombre de conger payé", 'subtitle':"/Année", 'contenu': "Contract_Type_Code"}, 'fig1_page2': {'title': "Nombre de congédiers payé", 'subtitle': "/Nombre de jours de congé (able par nom ou type de contrat)"}, 'fig3_page2': {'title': "Nombre de congédiers payé", 'subtitle':"/Type de contrat du congédier", 'contenu': "Emp_FirstName"}, 'actifselec': {'title':"effectif actif année selectionné "},
 'fig1_page3': {'title': "genre effectif", 'subtitle': "/augmentation"}, 'fig3_page3': {'title': "salaire moyen", 'subtitle': "/genre de l'effectif"}, 'fig2_page3': {'title': "evolution effectif feminin", 'subtitle': "/Année" }, 'fig4_page3': {'title': "evolution effectif masculin", 'subtitle': "/Année"}, 'fig6_page3': {'title': "evolution effectif feminin sur effectif total", 'subtitle': "/Année"}, 'fig8_page3': {'title': "evolution effectif congédiers féminin sur congédiers total", 'subtitle': "/Année", 'information' :"Nous avons fait le choix de retourner un zero lorsque le nombre de congédier total est nul"}}
 
 DIM_CONTRACT=pandas.read_csv('C:/Users/ikarray/Downloads/Dim_Contract.csv', usecols=['Contract Key', 'Contract_Type_Code', 'Contract_Type.FR', 'Contract_Type.EN']) 
@@ -358,7 +359,7 @@ html.Br(),
 html.Div([
 html.Div([
 html.Br(),
-html.B(id='parae', children="your filter:"),
+html.B(id='parafiltre', children="your filter:"),
 html.Br(),
 html.P(id='paralangue', children="choose your language:", style={"display": "inline-block", "width": "50%", "margin-left": "0%", 'backgroundColor': 'white', 'padding': '5px'}), 
 html.Br(), 
@@ -541,7 +542,6 @@ Input('url', 'pathname'), Input('bouton_Actif/Nationalite', 'n_clicks'), Input('
 State('etat-bouton1', 'data'), State('etat-bouton2', 'data')
 )
 def update_graph(path, n_click1, n_click2, langue, annee, valbouton1_page1, valbouton2_page1): 
-		if path=='/': #/Page-1
 			annee=int(annee) 
 			if annee>=2021:
 				secondannee=2021
