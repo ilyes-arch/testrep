@@ -441,7 +441,7 @@ value='2021'
 html.Br(), 
 html.P(children="choississez le type de age:"),
 dcc.Dropdown(
-id='menu_type_age', 
+id='menu_type_filtrage', 
 options=[{'label': 'age par contrat', 'value': 'Contract_Type.FR'}, {'label': 'age par nombre de congé pris', 'value': 'PaidLeave_Taken'}, {'label': 'filtrage par nom collaborateur', 'value': 'Emp_FirstName'}], 
 style={'backgroundColor': 'rgb(192, 164, 132)', 'color': 'rgb(0,0,0)'}
 ), 
