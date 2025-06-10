@@ -557,7 +557,7 @@ def update_graph(path, n_click1, n_click2, langue, annee, valbouton1_page1, valb
 			else: 
 				secondannee=annee 
 			date_actuelle=fourchette_annees(secondannee) 
-			nb_ligneseffectifactifselecc=calculactifpardat(annee) #il faut faire en sorte que la valeur reçu puisse être utilisable pour l'affichage de l'effectif actif
+			nb_ligneseffectifactifselecc=calculactifpardat(annee)				#il faut faire en sorte que la valeur reçu puisse être utilisable pour l'affichage de l'effectif actif
 			tableauemploieactifpardate=calculactifpardate(date_actuelle)
 			fig2_page1=px.line(DIM_EMPLOYEE_UNIQUE, x=date_actuelle, y=tableauemploieactifpardate, title=labels[langue]['fig2_page1']['title'], markers=True, text=tableauemploieactifpardate)
 			fig2_page1.update_layout(
@@ -670,7 +670,9 @@ def update_secondpage_graph(path, n_click1, n_click2, annee, filtre, resultfiltr
 			])
 
 			if filtre==None: 
-				DIM_PAYE_AFFICHE=DIM_PAYE[["Contract_Type_Code", "Emp_FirstName", "Emp_LastName", "Emp_Type", "Emp_Salary", "PaidLeave_Taken", "PaidLeave_Start_Date", "PaidLeave_End_Date", "Emp_Nationality.FR"]]
+				DIM_PAYE_AFFICHE=DIM_PAYE[["Contract_Type_Code", "Emp_FirstName", "Emp_LastName", "Emp_Type",
+				"Emp_Salary","PaidLeave_Taken", "PaidLeave_Start_Date", "PaidLeave_End_Date", 
+				"Emp_Nationality.FR"]]
 				tableau=dash_table.DataTable(columns=[{"name": col, "id": col} for col in DIM_PAYE_AFFICHE], data=DIM_PAYE_AFFICHE.to_dict("records"))
 			else:  
 				NEW_TAB=DIM_PAYE[DIM_PAYE[filtre]==resultfiltre] 
