@@ -1,3 +1,4 @@
+
 import plotly.express as px
 import pandas
 import dash
@@ -535,6 +536,16 @@ dcc.Graph(id="graphsix", style={"display": "inline-block", "width": "35%", "marg
 
 ], style={'backgroundColor': 'rgba(240, 240, 240)'})
 
+@app.callback(Output('page-content', 'children'), Input('url', 'pathname')
+) 
+def display_page(pathname): 
+	if pathname=='/Page-2': 
+		return page_2_layout
+	elif pathname=='/Page-3':
+		return page_3_layout
+	else:
+		return page_1_layout   
+
 @app.callback(
 Output('graph', 'figure'), Output('graphdeux', 'figure'), Output('bouton_Actif/Nationalite', 'children'), Output('bouton_Actif/Contrat', 'children'), Output('paralangue', 'children'), Output('CDI', 'children'), Output('effectif_paye', 'children'), Output('effectif_total', 'children'), Output('titre', 'children'),Output('bouton_Actif/Nationalite', 'style'), Output('bouton_Actif/Contrat', 'style'), Output('etat-bouton1', 'data'), Output('etat-bouton2', 'data'), Output('parannee', 'children'), Output('sous-titre', 'children'), Output('paralien1vers2', 'children'), Output('parafiltre', 'children'), Output('actifselec', 'children'), Output('nbractifselec', 'children'),
 Input('url', 'pathname'), Input('bouton_Actif/Nationalite', 'n_clicks'), Input('bouton_Actif/Contrat', 'n_clicks'), Input('menu_langue', 'value'), Input('menu_année', 'value'), 
@@ -583,16 +594,6 @@ def update_graph(path, n_click1, n_click2, langue, annee, valbouton1_page1, valb
 				dict(text=labels[langue]['fig3_page1']['subtitle'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
 				])
 				return fig1_page1, fig2_page1, labels[langue]['button1']['title'], labels[langue]['button2']['title'], labels[langue]['paralangue']['title'], labels[langue]['CDI']['title'], labels[langue]['effectif_paye']['title'], labels[langue]['effectif_total']['title'], labels[langue]['titre']['title'], couleurbouton1_page1, couleurbouton2_page1, valbouton1_page1, valbouton2_page1, labels[langue]['parannee']['title'], labels[langue]['sous-titre']['title'], labels[langue]['paralien1vers2']['title'], labels[langue]['parafiltre']['title'], labels[langue]['actifselec']['title'], nb_ligneseffectifactifselecc
-
-@app.callback(Output('page-content', 'children'), Input('url', 'pathname')
-) 
-def display_page(pathname): 
-	if pathname=='/Page-2': 
-		return page_2_layout
-	elif pathname=='/Page-3':
-		return page_3_layout
-	else:
-		return page_1_layout   
 
 @app.callback( 
 Output('graphquatre', 'figure'), Output('graphtrois', 'figure'), Output('bouton_congedierpaye/jours', 'style'), Output('bouton_congedierpaye/type', 'style'), Output('etatbouton1', 'data'), Output('etatbouton2', 'data'), Output('table-container', 'children'), Output('filtrage_par_typechoisit', 'options'), Output('parafiltredeux', 'children'), Output('paranbrconge', 'children'), Output('filtrage_par_typechoisit', 'value'), 
