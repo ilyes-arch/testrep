@@ -386,8 +386,8 @@ value='2021'
 ) 
 ], style={"display": "inline-block","width":"15%", 'backgroundColor': 'rgb(255,255,255)',  "border": "2px solid black"}), 
 html.Div([
-html.Button( id='bouton_Actif/Nationalite', children='active effectif/nationality', style={"display": "inline-block", "width": "13%", 'backgroundColor': 'red'}, n_clicks=1),
-html.Button( id='bouton_Actif/Contrat', children='active effectif/contract type', style={"display": "inline-block", "width": "13%", 'backgroundColor': 'white'}, n_clicks=0),
+html.Button( id='bouton_actif/nationalite', children='active effectif/nationality', style={"display": "inline-block", "width": "13%", 'backgroundColor': 'red'}, n_clicks=1),
+html.Button( id='bouton_actif/contrat', children='active effectif/contract type', style={"display": "inline-block", "width": "13%", 'backgroundColor': 'white'}, n_clicks=0),
 html.Br(), 
 dcc.Graph(id='graph_un', style={"display":"inline-block", "width": "35%", "margin-left": "0%"}),
 dcc.Graph(id='graph_deux', style={"display": "inline-block", "width": "35%", "margin-left": "4%"})
@@ -546,8 +546,8 @@ def display_page(pathname):
 		return page_1_layout   
 
 @app.callback(
-Output('graph_un', 'figure'), Output('graph_deux', 'figure'), Output('bouton_Actif/Nationalite', 'children'), Output('bouton_Actif/Contrat', 'children'), Output('paralangue', 'children'), Output('CDI', 'children'), Output('effectif_paye', 'children'), Output('effectif_total', 'children'), Output('titre', 'children'),Output('bouton_Actif/Nationalite', 'style'), Output('bouton_Actif/Contrat', 'style'), Output('état-bouton1', 'data'), Output('état-bouton2', 'data'), Output('parannée', 'children'), Output('sous-titre', 'children'), Output('paralien1vers2', 'children'), Output('parafiltre', 'children'), Output('actifselec', 'children'), Output('nbractifselec', 'children'),
-Input('url', 'pathname'), Input('bouton_Actif/Nationalite', 'n_clicks'), Input('bouton_Actif/Contrat', 'n_clicks'), Input('menu_langue', 'value'), Input('menu_année', 'value'), 
+Output('graph_un', 'figure'), Output('graph_deux', 'figure'), Output('bouton_actif/nationalite', 'children'), Output('bouton_actif/contrat', 'children'), Output('paralangue', 'children'), Output('CDI', 'children'), Output('effectif_paye', 'children'), Output('effectif_total', 'children'), Output('titre', 'children'),Output('bouton_actif/nationalite', 'style'), Output('bouton_actif/contrat', 'style'), Output('état-bouton1', 'data'), Output('état-bouton2', 'data'), Output('parannée', 'children'), Output('sous-titre', 'children'), Output('paralien1vers2', 'children'), Output('parafiltre', 'children'), Output('actifselec', 'children'), Output('nbractifselec', 'children'),
+Input('url', 'pathname'), Input('bouton_Actif/Nationalite', 'n_clicks'), Input('bouton_actif/contrat', 'n_clicks'), Input('menu_langue', 'value'), Input('menu_année', 'value'), 
 State('état-bouton1', 'data'), State('état-bouton2', 'data')
 )
 def update_graph(path, n_click1, n_click2, langue, année, valbouton1_page1, valbouton2_page1): 
@@ -568,10 +568,10 @@ def update_graph(path, n_click1, n_click2, langue, année, valbouton1_page1, val
 			fig2_page1.update_traces(fill='tozeroy', fillcolor='rgba(255, 0, 0, 0.3)', line=dict(color='red')) 
 			ctx=dash.callback_context
 			bouton=ctx.triggered[0]["prop_id"].split(".")[0]   
-			if bouton=="bouton_Actif/Nationalite": 
+			if bouton=="bouton_actif/nationalité": 
 				valbouton1_page1=1
 				valbouton2_page1=0
-			elif bouton=="bouton_Actif/Contrat": 
+			elif bouton=="bouton_actif/contrat": 
 				valbouton1_page1=0
 				valbouton2_page1=1
 			if valbouton1_page1==1:
