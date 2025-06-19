@@ -492,7 +492,7 @@ html.Div([
 html.P(children="Effectif masculin (année sélectionné)", style={"display": "inline-block", "width": "13%", "margin-left": "20%", "color": "rgb(0,0,0)", 'fontFamily': 'Arial', 'fontSize': '15px'}),
 html.P(children="Effectif feminin (année sélectionné)", style={"display": "inline-block", "width": "13%", "margin-left": "2%", "color": "rgb(0,0,0)", 'fontFamily': 'Arial', 'fontSize': '15px'}),
 html.P(children="Effectif total", style={"display": "inline-block", "width": "13%", "margin-left": "2%", "color": "rgb(0, 0, 0)", 'fontFamily': 'Arial', 'fontSize': '15px'}),
-html.P(children="Nombre age moyen par genre (feminin/masculin)", style={"display": "inline-block", "width": "13%", "margin-left": "2%", "color": "rgb(0, 0, 0)", 'fontFamily' : 'Arial', 'fontSize': '15px'}),
+html.P(children="Age moyen par genre (feminin/masculin)", style={"display": "inline-block", "width": "13%", "margin-left": "2%", "color": "rgb(0, 0, 0)", 'fontFamily' : 'Arial', 'fontSize': '15px'}),
 
 html.P(id="paraffectifmas", children="tabeffectifmas", style={"display": "inline-block", "width": "13%", "margin-left": "20%", "color": "rgb(0, 0, 0)", 'fontFamily': 'Arial', 'fontSize': '15px'}),
 html.P(id="paraffectiffem", children="tabeffectiffem", style={"display": "inline-block", "width": "13%", "margin-left": "2%", "color": "rgb(0, 0, 0)", 'fontFamily': 'Arial', 'fontSize': '15px'}),
