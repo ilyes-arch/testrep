@@ -362,10 +362,10 @@ html.B(id='parafiltre', children="your filter:"),
 html.Br(),
 html.P(id='paralangue', children="choose your language:", style={"display": "inline-block", "width": "50%", "margin-left": "0%", 'backgroundColor': 'white', 'padding': '5px'}), 
 html.Br(), 
-dcc.Store(id="état-bouton1", data=1, storage_type='session'),  
-dcc.Store(id="état-bouton2", data=0, storage_type='session'),
+dcc.Store(id="étatbouton1_page1", data=1, storage_type='session'),  
+dcc.Store(id="étatbouton2_page1", data=0, storage_type='session'),
 dcc.Dropdown(
-id='menu_langue', 
+id='menu_langue',
 options=[{'label': 'Anglais', 'value': 'Anglais'}, {'label': 'Français', 'value': 'Français'}],
 style={"display": "inline-block", "width": "75%"},
 clearable=False,
@@ -400,8 +400,8 @@ html.Div([
 html.H1(id='titre2', children="Tableau de bord RH", style={"display": "inline-block", "margin-left": "40%", "color": "red"}),
 dcc.Link(id='paralien2vers1', children="page précédente ", href="/", style={"display": "inline-block", "color": "red", "margin-left": "25%" }), 
 dcc.Link(id='paralien2vers3', children="page suivante", href="/Page-3", style={"display": "inline-block", "color": "red", "margin-left": "2%"}),
-dcc.Store(id="étatbouton1", data=1, storage_type='session'),
-dcc.Store(id="étatbouton2", data=0, storage_type='session'),
+dcc.Store(id="étatbouton1_page2", data=1, storage_type='session'),
+dcc.Store(id="étatbouton2_page2", data=0, storage_type='session'),
 dcc.Store(id="valeurmenu", storage_type='session'),
 html.Br(),
 html.P(id='sous-titre2', children="Analyse du congé", style={"display": "inline-block","width": "100%",  "margin-left": "42%", "color": "rgb(192, 164, 132)",'fontFamily': 'Arial', 'fontSize': '20px'}),
@@ -480,12 +480,12 @@ html.H1(id='titre3', children="Tableau de bord RH", style={"display": "inline-bl
 dcc.Link(id='paralien3vers2', children="page précédente", href="/Page-2", style={"display": "inline-block", "margin-left": "30%" , "color": "red"}),
 html.Br(),
 html.P(id='sous-titre3', children="Analyse du genre", style={"display": "inline-block", "width": "100%", "margin-left": "42%", "color": "rgb(177, 156, 217)",'fontFamily': 'Arial', 'fontSize': '20px'}),
-dcc.Store(id="état--bouton1", data=1, storage_type='session'),
-dcc.Store(id="état--bouton2", data=0, storage_type='session'),
-dcc.Store(id="état--bouton3", data=1, storage_type='session'),
-dcc.Store(id="état--bouton4", data=0, storage_type='session'),
-dcc.Store(id="état--bouton5", data=0, storage_type='session'),
-dcc.Store(id="état--bouton6", data=0, storage_type='session')
+dcc.Store(id="étatbouton1_page3", data=1, storage_type='session'),
+dcc.Store(id="étatbouton2_page3", data=0, storage_type='session'),
+dcc.Store(id="étatbouton3_page3", data=1, storage_type='session'),
+dcc.Store(id="étatbouton4_page3", data=0, storage_type='session'),
+dcc.Store(id="étatbouton5_page3", data=0, storage_type='session'),
+dcc.Store(id="étatbouton6_page3", data=0, storage_type='session')
 ], style={'backgroundColor': 'rgba(0, 0, 0, 0.7)'}),
 html.Br(),
 html.Div([
@@ -546,9 +546,9 @@ def display_page(pathname):
 		return page_1_layout   
 
 @app.callback(
-Output('graph_un', 'figure'), Output('graph_deux', 'figure'), Output('bouton_actif/nationalite', 'children'), Output('bouton_actif/contrat', 'children'), Output('paralangue', 'children'), Output('CDI', 'children'), Output('effectif_paye', 'children'), Output('effectif_total', 'children'), Output('titre', 'children'),Output('bouton_actif/nationalite', 'style'), Output('bouton_actif/contrat', 'style'), Output('état-bouton1', 'data'), Output('état-bouton2', 'data'), Output('parannée', 'children'), Output('sous-titre', 'children'), Output('paralien1vers2', 'children'), Output('parafiltre', 'children'), Output('actifselec', 'children'), Output('nbractifselec', 'children'),
+Output('graph_un', 'figure'), Output('graph_deux', 'figure'), Output('bouton_actif/nationalite', 'children'), Output('bouton_actif/contrat', 'children'), Output('paralangue', 'children'), Output('CDI', 'children'), Output('effectif_paye', 'children'), Output('effectif_total', 'children'), Output('titre', 'children'),Output('bouton_actif/nationalite', 'style'), Output('bouton_actif/contrat', 'style'), Output('étatbouton2_page1', 'data'), Output('étatbouton1_page1', 'data'), Output('parannée', 'children'), Output('sous-titre', 'children'), Output('paralien1vers2', 'children'), Output('parafiltre', 'children'), Output('actifselec', 'children'), Output('nbractifselec', 'children'),
 Input('url', 'pathname'), Input('bouton_actif/nationalite', 'n_clicks'), Input('bouton_actif/contrat', 'n_clicks'), Input('menu_langue', 'value'), Input('menu_année', 'value'), 
-State('état-bouton1', 'data'), State('état-bouton2', 'data')
+State('étatbouton1_page1', 'data'), State('étatbouton2_page1', 'data')
 )
 def update_graph(path, n_click1, n_click2, langue, année, valbouton1_page1, valbouton2_page1): 
 			année=int(année) 
@@ -561,6 +561,7 @@ def update_graph(path, n_click1, n_click2, langue, année, valbouton1_page1, val
 			tableauemploieactifpardate=calculactifpardate(date_actuelle)
 			fig2_page1=px.line(DIM_EMPLOYEE_UNIQUE, x=date_actuelle, y=tableauemploieactifpardate, title=labels_langue[langue]['fig2_page1']['title'], markers=True, text=tableauemploieactifpardate)
 			fig2_page1.update_layout(
+			#yaxis={'categoryorder': 'total ascending'},
 			annotations=[ 
 			dict(text=labels_langue[langue]['fig2_page1']['information'],  x=0.5, y=0, xref="paper", yref="paper", showarrow=False, font=dict(size=10)), 
 			dict(text=labels_langue[langue]['fig2_page1']['soustitre'], x=0, y=1.1, xref="paper", yref="paper", showarrow=False, font=dict(size=14))
@@ -595,8 +596,8 @@ def update_graph(path, n_click1, n_click2, langue, année, valbouton1_page1, val
 				return fig1_page1, fig2_page1, labels_langue[langue]['button1']['title'], labels_langue[langue]['button2']['title'], labels_langue[langue]['paralangue']['title'], labels_langue[langue]['CDI']['title'], labels_langue[langue]['effectif_paye']['title'], labels_langue[langue]['effectif_total']['title'], labels_langue[langue]['titre']['title'], couleurbouton1_page1, couleurbouton2_page1, valbouton1_page1, valbouton2_page1, labels_langue[langue]['parannée']['title'], labels_langue[langue]['sous-titre']['title'], labels_langue[langue]['paralien1vers2']['title'], labels_langue[langue]['parafiltre']['title'], labels_langue[langue]['actifselec']['title'], nb_ligneseffectifactifselecc
 
 @app.callback( 
-Output('graph_quatre', 'figure'), Output('graph_trois', 'figure'), Output('bouton_congédierpaye/jours', 'style'), Output('bouton_congédierpaye/type', 'style'), Output('étatbouton1', 'data'), Output('étatbouton2', 'data'), Output('table-container', 'children'), Output('filtrage_par_typechoisit', 'options'), Output('parafiltredeux', 'children'), Output('paranbrconge', 'children'), Output('filtrage_par_typechoisit', 'value'), 
-Input('url', 'pathname'), Input('bouton_congédierpaye/jours', 'n_clicks'), Input('bouton_congédierpaye/type', 'n_clicks'),Input('menu_année_secondepage', 'value'), Input('menu_type_filtrage', 'value'), Input('filtrage_par_typechoisit', 'value'), State('étatbouton1', 'data'), State('étatbouton2', 'data'))
+Output('graph_quatre', 'figure'), Output('graph_trois', 'figure'), Output('bouton_congédierpaye/jours', 'style'), Output('bouton_congédierpaye/type', 'style'), Output('étatbouton1_page2', 'data'), Output('étatbouton2_page2', 'data'), Output('table-container', 'children'), Output('filtrage_par_typechoisit', 'options'), Output('parafiltredeux', 'children'), Output('paranbrconge', 'children'), Output('filtrage_par_typechoisit', 'value'), 
+Input('url', 'pathname'), Input('bouton_congédierpaye/jours', 'n_clicks'), Input('bouton_congédierpaye/type', 'n_clicks'),Input('menu_année_secondepage', 'value'), Input('menu_type_filtrage', 'value'), Input('filtrage_par_typechoisit', 'value'), State('étatbouton1_page2', 'data'), State('étatbouton2_page2', 'data'))
 def update_secondpage_graph(path, n_click1, n_click2, année, filtre, resultfiltre, valbouton1_page2, valbouton2_page2):
 	if path=='/Page-2':
 		if filtre=='PaidLeave_Taken': 
@@ -697,8 +698,8 @@ def update_secondpage_graph(path, n_click1, n_click2, année, filtre, resultfilt
 				tableau=dash_table.DataTable(columns=[{"name": col, "id": col} for col in DIM_PAYE_AFFICHE], data=DIM_PAYE_AFFICHE.to_dict("records"))
 			return fig1_page2, fig2_page2, couleurbouton1_page2, couleurbouton2_page2, valbouton1_page2, valbouton2_page2, tableau, option, parafiltre, congedateactuelle, valeurfiltre 
 @app.callback(
-Output('graph_cinq', 'figure'), Output('graph_six', 'figure'), Output('bouton_genre/augmentation', 'style'), Output('bouton_genre/salaire', 'style'), Output('bouton_masculin/année', 'style'), Output('bouton_féminin/année', 'style'), Output('bouton_effectifféminin/effectiftotal', 'style'), Output('bouton_congédierféminin/congédiertotal', 'style'), Output('état--bouton1', 'data'), Output('état--bouton2', 'data'), Output('état--bouton3', 'data'), Output('état--bouton4', 'data'), Output('état--bouton5', 'data'), Output('état--bouton6', 'data'), Output('paraffectifmas', 'children'), Output('paraffectiffem', 'children'),
-Input('url', 'pathname'), Input('bouton_genre/augmentation', 'n_clicks'), Input('bouton_genre/salaire', 'n_clicks'), Input('bouton_masculin/année', 'n_clicks'), Input('bouton_féminin/année', 'n_clicks'), Input('bouton_effectifféminin/effectiftotal', 'n_clicks'), Input('bouton_congédierféminin/congédiertotal', 'n_clicks'), Input('menu_année_pagetrois', 'value'), State('état--bouton1', 'data'), State('état--bouton2', 'data'), State('état--bouton3', 'data'), State('état--bouton4', 'data'), State('état--bouton5', 'data'), State('état--bouton6', 'data')
+Output('graph_cinq', 'figure'), Output('graph_six', 'figure'), Output('bouton_genre/augmentation', 'style'), Output('bouton_genre/salaire', 'style'), Output('bouton_masculin/année', 'style'), Output('bouton_féminin/année', 'style'), Output('bouton_effectifféminin/effectiftotal', 'style'), Output('bouton_congédierféminin/congédiertotal', 'style'), Output('étatbouton1_page3', 'data'), Output('étatbouton2_page3', 'data'), Output('étatbouton3_page3', 'data'), Output('étatbouton4_page3', 'data'), Output('étatbouton5_page3', 'data'), Output('étatbouton6_page3', 'data'), Output('paraffectifmas', 'children'), Output('paraffectiffem', 'children'),
+Input('url', 'pathname'), Input('bouton_genre/augmentation', 'n_clicks'), Input('bouton_genre/salaire', 'n_clicks'), Input('bouton_masculin/année', 'n_clicks'), Input('bouton_féminin/année', 'n_clicks'), Input('bouton_effectifféminin/effectiftotal', 'n_clicks'), Input('bouton_congédierféminin/congédiertotal', 'n_clicks'), Input('menu_année_pagetrois', 'value'), State('étatbouton1_page3', 'data'), State('étatbouton2_page3', 'data'), State('étatbouton3_page3', 'data'), State('étatbouton4_page3', 'data'), State('étatbouton5_page3', 'data'), State('étatbouton6_page3', 'data')
 )
 def update_thirdpage_graph(path, nclick1, nclick2, nclick3, nclick4, nclick5, nclick6, année, valbouton1_page3, valbouton2_page3, valbouton3_page3, valbouton4_page3, valbouton5_page3, valbouton6_page3): 
 	if path=='/Page-3': 
