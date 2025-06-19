@@ -547,7 +547,7 @@ def display_page(pathname):
 
 @app.callback(
 Output('graph_un', 'figure'), Output('graph_deux', 'figure'), Output('bouton_actif/nationalite', 'children'), Output('bouton_actif/contrat', 'children'), Output('paralangue', 'children'), Output('CDI', 'children'), Output('effectif_paye', 'children'), Output('effectif_total', 'children'), Output('titre', 'children'),Output('bouton_actif/nationalite', 'style'), Output('bouton_actif/contrat', 'style'), Output('état-bouton1', 'data'), Output('état-bouton2', 'data'), Output('parannée', 'children'), Output('sous-titre', 'children'), Output('paralien1vers2', 'children'), Output('parafiltre', 'children'), Output('actifselec', 'children'), Output('nbractifselec', 'children'),
-Input('url', 'pathname'), Input('bouton_Actif/Nationalite', 'n_clicks'), Input('bouton_actif/contrat', 'n_clicks'), Input('menu_langue', 'value'), Input('menu_année', 'value'), 
+Input('url', 'pathname'), Input('bouton_actif/nationalite', 'n_clicks'), Input('bouton_actif/contrat', 'n_clicks'), Input('menu_langue', 'value'), Input('menu_année', 'value'), 
 State('état-bouton1', 'data'), State('état-bouton2', 'data')
 )
 def update_graph(path, n_click1, n_click2, langue, année, valbouton1_page1, valbouton2_page1): 
